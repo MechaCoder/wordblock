@@ -7,9 +7,9 @@ from bs4 import BeautifulSoup
 from .data import Word
 
 
-def importer(url:str, wordSize:int=4):
-    
-    print("url importer started")
+def importer(url:str, wordSize:int=5):
+    """ this is the importer for words enter a vaild url. """
+
     httpObj = urlopen(url)
     html = httpObj.read().decode('utf8')
     httpObj.close()
@@ -38,10 +38,10 @@ def importer(url:str, wordSize:int=4):
             except Warning as err:
                 print(str(err))
 
-    print("url importer finished")
     return True
 
 def isURLValid(url:str):
+    """ checks that a passed a URL is a vaild (not malformed) """
     
     regex = re.compile(
         r'^(?:http|ftp)s?://' # http:// or https://
