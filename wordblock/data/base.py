@@ -53,5 +53,5 @@ class DatabaseBase:
         row = tbl.get(doc_id=docId)
         tdb.close()
 
-        return row
+        return self.__outputRow__(row)
 
