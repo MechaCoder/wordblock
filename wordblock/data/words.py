@@ -26,6 +26,8 @@ class Word(DatabaseBase):
 
         rows = []
         for word in self.all():
-            rows.append(word['word'])
+            rows.append(word['word'].lower())
+
+        rows.sort()
 
         return rows
