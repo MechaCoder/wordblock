@@ -9,6 +9,7 @@ verify_ssl = true
 kivy = "*"
 tinydb = "*"
 pyperclip = "*"
+beautifulsoup4 = "*"
 
 [requires]
 python_version = "3.7"
