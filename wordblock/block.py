@@ -62,20 +62,23 @@ class WordScreen(GridLayout):
     def __init__(self, **kwargs):
         """ this is the contoler for the word block """
         super().__init__(**kwargs)
-        self.cols = 1
+        self.cols = 10
         self.block = {}
 
         for word in Word().readAllAsList():
-            self.block[word] = Button(text=word, on_press=self.onPress,)
+            self.block[word] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word])
 
-            if len(self.block.keys()) >= 50:
+            # continue
+
+            if len(self.block.keys()) >= 60:
                 break
 
     def onPress(self, instance):
         Clipper().copy(instance.text)
 
 class WordBlock(App):
+    """ this is the app controller that is the root of the gui """
      
     def build(self):
  
