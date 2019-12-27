@@ -27,28 +27,29 @@ class ToolBar(GridLayout):
         self.height = 10
         self.urlText = TextInput(hint_text="enter a url")
         self.importPage = Button(text='Import URL', on_press=self.onClick)
+
         self.add_widget(self.urlText)
         self.add_widget(self.importPage)
 
     def onClick(self, instance):
-        
-
         if isURLValid(self.urlText.text) == False:
             return False
 
         self.urlText.disabled = True
         self.importPage.disabled = True
+        
         importer(self.urlText.text)
+
         self.urlText.disabled = False
         self.importPage.disabled = False
-
-        print('Finished')
+        
+        
 
 class WordScreen(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.cols = 4
+        self.cols = 8
         self.block = {}
 
         for word in Word().readAllAsList():
@@ -64,11 +65,25 @@ class WordBlock(App):
      
     def build(self):
  
-        self.box = BoxLayout(orientation='vertical', spacing=20)
-        self.tools = ToolBar(size_hint_y=0.075)
+
+        self.box = BoxLayout(orientation='vertical', spacing=10)
+        
+        self.tools = ToolBar(size_hint_y=0.125)
         self.word = WordScreen()
 
+        self.refreshWidgets("")
+        return self.box
+
+    def refreshWidgets(self, instance):
+
+        self.word = WordScreen()
+
+        self.box.clear_widgets()
         self.box.add_widget(self.tools)
         self.box.add_widget(self.word)
+        self.box.add_widget(
+            Button(text='Refresh Window', on_press=self.refreshWidgets, size_hint_y=0.075)
+        )
 
-        return self.box
+
+        print('refresh')
