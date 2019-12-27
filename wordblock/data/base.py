@@ -7,6 +7,10 @@ class DatabaseException(Exception): pass
 class DatabaseBase:
 
     def __init__(self, filelocation:str='./ds.json', table:str=__name__):
+        """ this is the base class for all Database interaction. 
+
+        the table is going to be set to the name string of the class, 
+        """
         self.file = filelocation
         self.table = table
 
@@ -23,6 +27,7 @@ class DatabaseBase:
         return rDict
 
     def __outputRows__(self, docs:list):
+        """ provides function to output list of documents """
         
         if isinstance(docs, list) == False:
             raise DatabaseException('the object passed must be a `list`.')
@@ -33,6 +38,7 @@ class DatabaseBase:
         return rows
 
     def all(self):
+        """ provides a list of dicts of all document in the table"""
 
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
@@ -43,6 +49,7 @@ class DatabaseBase:
         return self.__outputRows__(rows)
 
     def getById(self, docId:int):
+        """ this gets a document by the doc id and returns of dict """
 
         if isinstance(docId, int) == False:
             raise DatabaseException('docIds must be a int')

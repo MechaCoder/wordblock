@@ -3,9 +3,11 @@ from .base import *
 class Word(DatabaseBase):
 
     def __init__(self, filelocation='./ds.json', table=__name__):
+        """ this is the database table for the table in this case `wordblock.data.words` """
         super().__init__(filelocation=filelocation, table=table)
 
     def insert(self, word:str):
+        """ insert a new word to the table """
         
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
