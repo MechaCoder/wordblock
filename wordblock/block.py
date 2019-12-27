@@ -7,21 +7,23 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 
+from .data import Word
+from clipPad import Clipper
 
 class WordScreen(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 4
-
-        words = ['the', 'quick', 'brown', 'fox']
         self.block = {}
 
-        for word in words:
-            print
-            self.block[word] = Button(text=word)
+        for word in Word().readAllAsList():
+            self.block[word] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word])
-        
+
+    def onPress(self, instance):
+        Clipper().copy(instance.text)
+
 
 
 class WordBlock(App):
@@ -33,7 +35,3 @@ class WordBlock(App):
         self.box.add_widget(self.word)
 
         return self.box
- 
-    def clearText(self, instance):
- 
-        self.txt.text = ''
