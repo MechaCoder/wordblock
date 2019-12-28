@@ -69,9 +69,7 @@ class WordScreen(GridLayout):
             self.block[word] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word])
 
-            # continue
-
-            if len(self.block.keys()) >= 60:
+            if len(self.block.keys()) >= 65:
                 break
 
     def onPress(self, instance):
