@@ -16,6 +16,7 @@ from kivy.core.window import Window
 
 from .data import Word
 from .utils import importer, isURLValid
+from .speaker import speak
 from clipPad import Clipper
 
 
@@ -77,6 +78,7 @@ class WordScreen(GridLayout):
 
     def onPress(self, instance):
         Clipper().copy(instance.text)
+        speak(instance.text)
 
 class WordBlock(App):
     """ this is the app controller that is the root of the gui """
@@ -88,7 +90,7 @@ class WordBlock(App):
         
         self.tools = ToolBar(size_hint_y=0.125)
         self.sBox = TextInput(
-            text="test",
+            text="",
             size_hint_y=0.125,
             multiline=False,
             on_text_validate=self.findWords
@@ -114,6 +116,3 @@ class WordBlock(App):
         self.box.add_widget(
             Button(text='Refresh Window', on_press=self.refreshWidgets, size_hint_y=0.075)
         )
-
-
-        print('refresh')

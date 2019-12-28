@@ -12,6 +12,7 @@ pyperclip = "*"
 beautifulsoup4 = "*"
 fuzzywuzzy = "*"
 python-levenshtein = "*"
+pyttsx3 = "*"
 
 [requires]
 python_version = "3.7"
