@@ -1,10 +1,28 @@
 from .base import *
 
+def vaildWords(word:str):
+    
+    if isinstance(word, str) == False:
+        return False
+
+    if word[0] not in ascii_letters:
+        return False
+
+    if word[-1] not in ascii_letters:
+        return False
+
+    for char in word:
+        if char not in ascii_letters and char not in "-'":
+            return False
+
+    return True
+
 class Word(DatabaseBase):
 
     def __init__(self, filelocation='./ds.json', table=__name__):
         """ this is the database table for the table in this case `wordblock.data.words` """
         super().__init__(filelocation=filelocation, table=table)
+        self.normalise()
 
     def insert(self, word:str):
         """ insert a new word to the table """
@@ -33,3 +51,13 @@ class Word(DatabaseBase):
         rows.sort()
 
         return rows
+
+    def normalise(self):
+
+        idsList = []
+        for word in self.all():
+            if vaildWords(word['word']):
+                continue
+            idsList.append(word['id'])
+        self.removeById(idsList)
+

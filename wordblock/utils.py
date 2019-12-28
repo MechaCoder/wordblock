@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 
 from .data import Word
 
+from .data.words import vaildWords
+
 
 def importer(url:str, wordSize:int=5):
     """ this is the importer for words enter a vaild url. """
@@ -24,13 +26,7 @@ def importer(url:str, wordSize:int=5):
             if word in wordList:
                 continue
 
-            if word[0] not in ascii_letters:
-                continue
-
-            if word[-1] not in ascii_letters:
-                word = wordList[:-1]
-
-            if isinstance(word, str) == False:
+            if vaildWords(word) == False:
                 continue
             
             try:

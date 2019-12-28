@@ -1,3 +1,5 @@
+from string import ascii_letters
+
 from tinydb import TinyDB, Query
 from tinydb.database import Document
 from time import time_ns
@@ -61,4 +63,20 @@ class DatabaseBase:
         tdb.close()
 
         return self.__outputRow__(row)
+
+    def removeById(self, docIds:list):
+
+        for ident in docIds:
+            if isinstance(ident, int) == False:
+                raise DatabaseException('all ids must be a string')
+
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        tbl.remove(
+            doc_ids=docIds
+        )
+
+        tdb.close()
+        return True
 
