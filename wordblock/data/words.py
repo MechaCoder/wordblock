@@ -2,6 +2,7 @@ from .base import *
 from fuzzywuzzy import process
 
 def vaildWords(word:str):
+    word = word.lower()
     
     if isinstance(word, str) == False:
         return False
@@ -27,6 +28,8 @@ class Word(DatabaseBase):
 
     def insert(self, word:str):
         """ insert a new word to the table """
+
+        word = word.lower()
         
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
@@ -66,9 +69,17 @@ class Word(DatabaseBase):
     def normalise(self):
 
         idsList = []
+        doneWords = []
         for word in self.all():
-            if vaildWords(word['word']):
-                continue
-            idsList.append(word['id'])
+            
+            if vaildWords(word['word'].lower()) == False:
+                idsList.append(word['id'])
+
+            if word['word'] in doneWords:
+                idsList.append(word['id'])
+            
+            doneWords.append(word['word'].lower())
+
+            
         self.removeById(idsList)
 
