@@ -13,6 +13,7 @@ beautifulsoup4 = "*"
 fuzzywuzzy = "*"
 python-levenshtein = "*"
 pyttsx3 = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.7"

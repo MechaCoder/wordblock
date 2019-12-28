@@ -59,7 +59,7 @@ class Word(DatabaseBase):
 
         words = self.readAllAsList()
         rWords = []
-        for result in process.extract(qStr, words, limit=50):
+        for result in process.extract(qStr, words, limit=65):
             rWords.append(result[0])
         return rWords
 
