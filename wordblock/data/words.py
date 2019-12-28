@@ -1,4 +1,5 @@
 from .base import *
+from fuzzywuzzy import process
 
 def vaildWords(word:str):
     
@@ -51,6 +52,16 @@ class Word(DatabaseBase):
         rows.sort()
 
         return rows
+
+    def readFindString(self, qStr:str=''):
+        if qStr == '':
+            return self.readAllAsList()
+
+        words = self.readAllAsList()
+        rWords = []
+        for result in process.extract(qStr, words, limit=50):
+            rWords.append(result[0])
+        return rWords
 
     def normalise(self):
 
