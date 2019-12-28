@@ -22,6 +22,7 @@ from clipPad import Clipper
 
 
 class ToolBar(GridLayout):
+    
     def __init__(self, **kwargs):
         """ this is where the Tools for the bar for importing"""
         super().__init__(**kwargs)
