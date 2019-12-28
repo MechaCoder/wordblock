@@ -22,6 +22,7 @@ from clipPad import Clipper
 
 
 class ToolBar(GridLayout):
+    
     def __init__(self, **kwargs):
         """ this is where the Tools for the bar for importing"""
         super().__init__(**kwargs)
@@ -69,9 +70,7 @@ class WordScreen(GridLayout):
             self.block[word] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word])
 
-            # continue
-
-            if len(self.block.keys()) >= 60:
+            if len(self.block.keys()) >= 65:
                 break
 
     def onPress(self, instance):
