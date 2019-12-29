@@ -58,11 +58,11 @@ class Word(DatabaseBase):
 
     def readFindString(self, qStr:str=''):
         if qStr == '':
-            return self.readAllAsList()
+            return self.readAllAsList()[0:70]
 
         words = self.readAllAsList()
         rWords = []
-        for result in process.extract(qStr, words, limit=65):
+        for result in process.extract(qStr, words, limit=70):
             rWords.append(result[0])
         return rWords
 

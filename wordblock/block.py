@@ -73,9 +73,6 @@ class WordScreen(GridLayout):
             self.block[word] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word])
 
-            if len(self.block.keys()) >= 65:
-                break
-
     def onPress(self, instance):
         Clipper().copy(instance.text)
         speak(instance.text)
@@ -86,12 +83,12 @@ class WordBlock(App):
     def build(self):
  
 
-        self.box = BoxLayout(orientation='vertical', spacing=10)
+        self.box = BoxLayout(orientation='vertical', spacing=5)
         
-        self.tools = ToolBar(size_hint_y=0.125)
+        self.tools = ToolBar(size_hint_y=0.15)
         self.sBox = TextInput(
             text="",
-            size_hint_y=0.125,
+            size_hint_y=0.15,
             multiline=False,
             on_text_validate=self.findWords
         )
@@ -107,7 +104,6 @@ class WordBlock(App):
     def refreshWidgets(self, instance):
 
         self.word = WordScreen(self.sBox.text)
-
 
         self.box.clear_widgets()
         self.box.add_widget(self.tools)
