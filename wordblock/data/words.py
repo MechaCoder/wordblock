@@ -75,11 +75,10 @@ class Word(DatabaseBase):
             if vaildWords(word['word'].lower()) == False:
                 idsList.append(word['id'])
 
-            if word['word'] in doneWords:
+            if word['word'].lower() in doneWords:
                 idsList.append(word['id'])
             
             doneWords.append(word['word'].lower())
-
             
         self.removeById(idsList)
 
