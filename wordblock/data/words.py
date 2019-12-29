@@ -80,5 +80,5 @@ class Word(DatabaseBase):
             
             doneWords.append(word['word'].lower())
             
-        self.removeById(idsList)
+        return self.removeById(idsList)
 
