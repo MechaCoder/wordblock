@@ -1,10 +1,10 @@
-from .base import *
+from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters
 from fuzzywuzzy import process
 
-def vaildWords(word:str):
+
+def vaildWords(word: str):
     word = word.lower()
-    
-    if isinstance(word, str) == False:
+    if isinstance(word, str) is False:
         return False
 
     if word[0] not in ascii_letters:
@@ -19,18 +19,20 @@ def vaildWords(word:str):
 
     return True
 
+
 class Word(DatabaseBase):
 
     def __init__(self, filelocation='./ds.json', table=__name__):
-        """ this is the database table for the table in this case `wordblock.data.words` """
+        """ this is the database table for the table in this case
+        `wordblock.data.words` """
         super().__init__(filelocation=filelocation, table=table)
         self.normalise()
 
-    def insert(self, word:str):
+    def insert(self, word: str):
         """ insert a new word to the table """
 
         word = word.lower()
-        
+
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
 
@@ -56,7 +58,7 @@ class Word(DatabaseBase):
 
         return rows
 
-    def readFindString(self, qStr:str=''):
+    def readFindString(self, qStr: str = ''):
         if qStr == '':
             return self.readAllAsList()[0:70]
 
@@ -71,14 +73,13 @@ class Word(DatabaseBase):
         idsList = []
         doneWords = []
         for word in self.all():
-            
-            if vaildWords(word['word'].lower()) == False:
+
+            if vaildWords(word['word'].lower()) is False:
                 idsList.append(word['id'])
 
             if word['word'].lower() in doneWords:
                 idsList.append(word['id'])
-            
-            doneWords.append(word['word'].lower())
-            
-        return self.removeById(idsList)
 
+            doneWords.append(word['word'].lower())
+
+        return self.removeById(idsList)

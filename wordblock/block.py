@@ -1,18 +1,10 @@
-from time import sleep
-from threading import Thread
-
 from kivy.app import App
-from kivy.uix.widget import Widget
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
-from kivy.uix.label import Label
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
-
-from kivy.uix.scrollview import ScrollView
-from kivy.core.window import Window
 
 from .data import Word
 from .utils import importer, isURLValid
@@ -20,10 +12,8 @@ from .speaker import speak
 from clipPad import Clipper
 
 
-
-
 class ToolBar(GridLayout):
-    
+
     def __init__(self, **kwargs):
         """ this is where the Tools for the bar for importing"""
         super().__init__(**kwargs)
@@ -35,33 +25,30 @@ class ToolBar(GridLayout):
         self.add_widget(self.urlText)
         self.add_widget(self.importPage)
 
-
     def onClick(self, instance):
-        if isURLValid(self.urlText.text) == False:
+        if isURLValid(self.urlText.text) is False:
             return False
 
         self.urlText.disabled = True
         self.importPage.disabled = True
-        
+
         importer(self.urlText.text)
 
         self.urlText.disabled = False
-        self.importPage.disabled = False    
+        self.importPage.disabled = False
         p = Popup(
             title="A new Webpage has been imported",
             size_hint=(None, None),
             size=(200, 200),
         )
-        p.content=Button(text='Dismiss', on_press=p.dismiss)
+        p.content = Button(text='Dismiss', on_press=p.dismiss)
         p.open()
         self.urlText.text = ""
 
-        
-        
 
 class WordScreen(GridLayout):
 
-    def __init__(self, findTxt:str='', **kwargs):
+    def __init__(self, findTxt: str = '', **kwargs):
         """ this is the contoler for the word block """
         super().__init__(**kwargs)
 
@@ -77,14 +64,13 @@ class WordScreen(GridLayout):
         Clipper().copy(instance.text)
         speak(instance.text)
 
+
 class WordBlock(App):
     """ this is the app controller that is the root of the gui """
-     
+
     def build(self):
- 
 
         self.box = BoxLayout(orientation='vertical', spacing=5)
-        
         self.tools = ToolBar(size_hint_y=0.15)
         self.sBox = TextInput(
             text="",
@@ -100,7 +86,6 @@ class WordBlock(App):
     def findWords(self, value):
         self.refreshWidgets('')
 
-
     def refreshWidgets(self, instance):
 
         self.word = WordScreen(self.sBox.text)
@@ -110,5 +95,9 @@ class WordBlock(App):
         self.box.add_widget(self.sBox)
         self.box.add_widget(self.word)
         self.box.add_widget(
-            Button(text='Refresh Window', on_press=self.refreshWidgets, size_hint_y=0.075)
+            Button(
+                text='Refresh Window',
+                on_press=self.refreshWidgets,
+                size_hint_y=0.075
+            )
         )

@@ -1,1 +1,1 @@
-from .words import Word
+from .words import Word  # noqa: F401

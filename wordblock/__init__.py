@@ -1,1 +1,1 @@
-from .block import WordBlock
+from .block import WordBlock  # noqa: F401
