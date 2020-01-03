@@ -19,7 +19,7 @@ class ToolBar(GridLayout):
         super().__init__(**kwargs)
         self.rows = 1
         self.height = 10
-        self.urlText = TextInput(hint_text="enter a url")
+        self.urlText = TextInput(hint_text="enter a url",)
         self.importPage = Button(text='Import URL', on_press=self.onClick)
 
         self.add_widget(self.urlText)
