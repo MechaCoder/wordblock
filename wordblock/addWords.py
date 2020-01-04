@@ -132,11 +132,6 @@ class WordsListLayout(GridLayout):
 
         popup.content = g
         popup.open()
-
-    def delete_suc(self, i):
-        print('deleted')
-        print( self )
-        print( i )
         
 
 class AddWordsApp(App):
