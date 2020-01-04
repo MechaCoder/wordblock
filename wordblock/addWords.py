@@ -139,8 +139,8 @@ class AddWordsApp(App):
     def build(self):
         self.box = BoxLayout(orientation='vertical', spacing=5)
         
-        self.urlPanel = UrlLayout(size_hint_y=10)
-        self.addSingle = AddSingle(size_hint_y=10)
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
         
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
@@ -156,8 +156,8 @@ class AddWordsApp(App):
     def refreshList(self, inst):
         self.box.clear_widgets()
 
-        self.urlPanel = UrlLayout(size_hint_y=10)
-        self.addSingle = AddSingle(size_hint_y=10)
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
         
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
