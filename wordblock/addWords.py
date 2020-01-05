@@ -137,6 +137,7 @@ class WordsListLayout(GridLayout):
 class AddWordsApp(App):
 
     def build(self):
+        self.title = 'Settings'
         self.box = BoxLayout(orientation='vertical', spacing=5)
         
         self.urlPanel = UrlLayout(size_hint_y=1)
