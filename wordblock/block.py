@@ -54,7 +54,7 @@ class WordBlock(App):
     def build(self):
 
         self.box = BoxLayout(orientation='vertical', spacing=5)
-        self.tools = ToolBar(size_hint_y=0.15)
+        # self.tools = ToolBar(size_hint_y=0.15)
         self.sBox = TextInput(
             text="",
             size_hint_y=0.15,
@@ -74,7 +74,7 @@ class WordBlock(App):
         self.word = WordScreen(self.sBox.text)
 
         self.box.clear_widgets()
-        self.box.add_widget(self.tools)
+        # self.box.add_widget(self.tools)
         self.box.add_widget(self.sBox)
         self.box.add_widget(self.word)
         self.box.add_widget(
