@@ -36,11 +36,11 @@ class Word(DatabaseBase):
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
 
-        if tbl.contains(Query().word == word):
+        if tbl.contains(Query().word == word.lower()):
             raise Warning(f'{word} already exists')
 
         rowId = tbl.insert({
-            'word': word,
+            'word': word.lower(),
             'time': time_ns()
         })
 
