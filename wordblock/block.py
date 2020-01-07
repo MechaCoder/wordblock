@@ -25,7 +25,6 @@ Builder.load_string("""
     name: '_settings_'
 """)
 
-
 class ToolBar(GridLayout):
 
     def __init__(self, **kwargs):
@@ -38,7 +37,6 @@ class ToolBar(GridLayout):
         self.add_widget(self.btn)
 
     def on_press_callback(self, ints):
-        print('text')
         sm.current = '_settings_'
         pass
 

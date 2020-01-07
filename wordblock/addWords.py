@@ -10,6 +10,8 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
+from kivy.clock import Clock
+
 from .data import Word
 from .utils import importer
 from .utils import isURLValid
@@ -84,11 +86,9 @@ class WordsListLayout(GridLayout):
         super().__init__(**kwargs)
 
         self.cols = 6
-
-        self.buildList()
+        Clock.schedule_interval(self.buildList, 10)
 
     def buildList(self, b=None):
-        print('buildList')
 
         self.clear_widgets()
 
