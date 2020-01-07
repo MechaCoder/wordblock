@@ -14,6 +14,7 @@ fuzzywuzzy = "*"
 python-levenshtein = "*"
 pyttsx3 = "*"
 pyinstaller = "*"
+flake8 = "*"
 
 [requires]
 python_version = "3.7"
