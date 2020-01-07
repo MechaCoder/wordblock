@@ -11,6 +11,14 @@ from .utils import importer, isURLValid
 from .speaker import speak
 from clipPad import Clipper
 
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
+
+Builder.load_string("""
+<WordBlock>
+    name: '_word_block_'
+""")
+
 
 class ToolBar(GridLayout):
 
@@ -64,40 +72,42 @@ class WordScreen(GridLayout):
         Clipper().copy(instance.text)
         speak(instance.text)
 
+class WordBlock(Screen):
 
-class WordBlock(App):
-    """ this is the app controller that is the root of the gui """
 
-    def build(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
+        #  import Form
+        self.box = BoxLayout(
+            orientation='vertical',
+            spacing=5
+        )
 
-        self.box = BoxLayout(orientation='vertical', spacing=5)
-        self.tools = ToolBar(size_hint_y=0.15)
-        self.sBox = TextInput(
+        self.importBox = ToolBar(size_hint_y=0.15)
+        self.box.add_widget(self.importBox)
+
+        self.searchBox = TextInput(
             text="",
             size_hint_y=0.15,
             multiline=False,
             on_text_validate=self.findWords
         )
-        self.word = WordScreen(self.sBox.text)
+        self.box.add_widget(self.searchBox)
 
-        self.refreshWidgets("")
-        return self.box
+        self.add_widget(self.box)
 
-    def findWords(self, value):
-        self.refreshWidgets('')
+    def findWords(self, event):
+        pass
 
-    def refreshWidgets(self, instance):
 
-        self.word = WordScreen(self.sBox.text)
 
-        self.box.clear_widgets()
-        self.box.add_widget(self.tools)
-        self.box.add_widget(self.sBox)
-        self.box.add_widget(self.word)
-        self.box.add_widget(
-            Button(
-                text='Refresh Window',
-                on_press=self.refreshWidgets,
-                size_hint_y=0.075
-            )
-        )
+sm = ScreenManager()
+sm.add_widget(WordBlock())
+
+class WordBlock(App):
+    """ this is the app controller that is the root of the gui """
+
+    def build(self):
+        sm.current = '_word_block_'
+        return sm
