@@ -54,7 +54,7 @@ class ToolBar(GridLayout):
         self.urlText.text = ""
 
 
-class WordScreen(GridLayout):
+class WordGrid(GridLayout):
 
     def __init__(self, findTxt: str = '', **kwargs):
         """ this is the contoler for the word block """
@@ -95,9 +95,18 @@ class WordBlock(Screen):
         )
         self.box.add_widget(self.searchBox)
 
+        self.word = WordGrid(findTxt=self.searchBox.text)
+        self.box.add_widget(self.word)
+
         self.add_widget(self.box)
 
     def findWords(self, event):
+        # self.word = WordBlock(findTxt=self.searchBox.text)
+        print(event.text)
+        
+        self.box.remove_widget(self.word)
+        self.word = WordGrid(findTxt=event.text)
+        self.box.add_widget(self.word)
         pass
 
 
