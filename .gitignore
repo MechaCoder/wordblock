@@ -1,4 +1,4 @@
-_play.py
+_play*.py
 ds.json
 build/*
 dist/*
