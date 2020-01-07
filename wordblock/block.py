@@ -9,6 +9,7 @@ from kivy.uix.popup import Popup
 from .data import Word
 from .utils import importer, isURLValid
 from .speaker import speak
+from .addWords import AddWordsApp
 from clipPad import Clipper
 
 
@@ -19,31 +20,13 @@ class ToolBar(GridLayout):
         super().__init__(**kwargs)
         self.rows = 1
         self.height = 10
-        self.urlText = TextInput(hint_text="enter a url")
-        self.importPage = Button(text='Import URL', on_press=self.onClick)
+        
+        self.btn = Button(text='Add Words', on_press=self.on_press_callback)
+        self.add_widget(self.btn)
 
-        self.add_widget(self.urlText)
-        self.add_widget(self.importPage)
-
-    def onClick(self, instance):
-        if isURLValid(self.urlText.text) is False:
-            return False
-
-        self.urlText.disabled = True
-        self.importPage.disabled = True
-
-        importer(self.urlText.text)
-
-        self.urlText.disabled = False
-        self.importPage.disabled = False
-        p = Popup(
-            title="A new Webpage has been imported",
-            size_hint=(None, None),
-            size=(200, 200),
-        )
-        p.content = Button(text='Dismiss', on_press=p.dismiss)
-        p.open()
-        self.urlText.text = ""
+    def on_press_callback(self, ints):
+        print('text')
+        pass
 
 
 class WordScreen(GridLayout):
@@ -71,7 +54,7 @@ class WordBlock(App):
     def build(self):
 
         self.box = BoxLayout(orientation='vertical', spacing=5)
-        self.tools = ToolBar(size_hint_y=0.15)
+        # self.tools = ToolBar(size_hint_y=0.15)
         self.sBox = TextInput(
             text="",
             size_hint_y=0.15,
@@ -91,7 +74,7 @@ class WordBlock(App):
         self.word = WordScreen(self.sBox.text)
 
         self.box.clear_widgets()
-        self.box.add_widget(self.tools)
+        # self.box.add_widget(self.tools)
         self.box.add_widget(self.sBox)
         self.box.add_widget(self.word)
         self.box.add_widget(
