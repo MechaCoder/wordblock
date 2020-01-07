@@ -18,6 +18,8 @@ from kivy.lang import Builder
 Builder.load_string("""
 <WordBlock>
     name: '_word_block_'
+<Settings>
+    name: '_settings_'
 """)
 
 
@@ -92,14 +94,20 @@ class WordBlock(Screen):
         self.box.add_widget(self.word)
         pass
 
+class Settings(Screen):
 
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.add_widget(Button(text="SETTINGS"))
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
+sm.add_widget(Settings())
 
 class WordBlock(App):
     """ this is the app controller that is the root of the gui """
 
     def build(self):
-        sm.current = '_word_block_'
+        sm.current = '_settings_'
         return sm
