@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
+from kivy.uix.screenmanager import Screen
 
 
 from kivy.uix.textinput import TextInput
@@ -14,6 +15,7 @@ from .data import Word
 from .utils import importer
 from .utils import isURLValid
 from .ui.popUp import popUp
+
 
 class UrlLayout(GridLayout):
 
@@ -82,7 +84,7 @@ class WordsListLayout(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.cols = 2
+        self.cols = 4
 
         wordsList = sorted( Word().all(), key = lambda i: i['word'])
         for word in wordsList:
@@ -162,6 +164,7 @@ class AddWordsApp(App):
         
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
+        
         self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 400))
         self.scrollList.add_widget(self.wordList)
 
@@ -170,3 +173,39 @@ class AddWordsApp(App):
         self.box.add_widget(self.scrollList)
         self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))
         
+class SettingsScreen(Screen):
+    
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.box = BoxLayout(orientation='vertical', spacing=5)
+
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
+
+        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
+        self.wordList.bind(minimum_height=self.wordList.setter('height'))
+        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 200))
+        self.scrollList.add_widget(self.wordList)
+
+        self.box.add_widget(self.urlPanel)
+        self.box.add_widget(self.addSingle)
+        self.box.add_widget(self.scrollList)
+        self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))
+
+        self.add_widget(self.box)
+
+    def refreshList(self, inst):
+        self.box.clear_widgets()
+
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
+        
+        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
+        self.wordList.bind(minimum_height=self.wordList.setter('height'))
+        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 200))
+        self.scrollList.add_widget(self.wordList)
+
+        self.box.add_widget(self.urlPanel)
+        self.box.add_widget(self.addSingle)
+        self.box.add_widget(self.scrollList)
+        self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))

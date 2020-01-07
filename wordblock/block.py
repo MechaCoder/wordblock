@@ -9,7 +9,7 @@ from kivy.uix.popup import Popup
 from .data import Word
 from .utils import importer, isURLValid
 from .speaker import speak
-from .addWords import AddWordsApp
+from .addWords import SettingsScreen
 from clipPad import Clipper
 
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -18,7 +18,7 @@ from kivy.lang import Builder
 Builder.load_string("""
 <WordBlock>
     name: '_word_block_'
-<Settings>
+<SettingsScreen>
     name: '_settings_'
 """)
 
@@ -36,6 +36,7 @@ class ToolBar(GridLayout):
 
     def on_press_callback(self, ints):
         print('text')
+        sm.current = '_settings_'
         pass
 
 
@@ -94,20 +95,15 @@ class WordBlock(Screen):
         self.box.add_widget(self.word)
         pass
 
-class Settings(Screen):
 
-    def __init__(self, **kw):
-        super().__init__(**kw)
-
-        self.add_widget(Button(text="SETTINGS"))
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
-sm.add_widget(Settings())
+sm.add_widget(SettingsScreen())
 
 class WordBlock(App):
     """ this is the app controller that is the root of the gui """
 
     def build(self):
-        sm.current = '_settings_'
+        sm.current = '_word_block_'
         return sm
