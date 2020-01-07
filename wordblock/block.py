@@ -9,8 +9,18 @@ from kivy.uix.popup import Popup
 from .data import Word
 from .utils import importer, isURLValid
 from .speaker import speak
-from .addWords import AddWordsApp
+from .addWords import SettingsScreen
 from clipPad import Clipper
+
+from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.lang import Builder
+
+Builder.load_string("""
+<WordBlock>
+    name: '_word_block_'
+<SettingsScreen>
+    name: '_settings_'
+""")
 
 
 class ToolBar(GridLayout):
@@ -26,10 +36,11 @@ class ToolBar(GridLayout):
 
     def on_press_callback(self, ints):
         print('text')
+        sm.current = '_settings_'
         pass
 
 
-class WordScreen(GridLayout):
+class WordGrid(GridLayout):
 
     def __init__(self, findTxt: str = '', **kwargs):
         """ this is the contoler for the word block """
@@ -47,40 +58,52 @@ class WordScreen(GridLayout):
         Clipper().copy(instance.text)
         speak(instance.text)
 
+class WordBlock(Screen):
 
-class WordBlock(App):
-    """ this is the app controller that is the root of the gui """
 
-    def build(self):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        
+        #  import Form
+        self.box = BoxLayout(
+            orientation='vertical',
+            spacing=5
+        )
 
-        self.box = BoxLayout(orientation='vertical', spacing=5)
-        # self.tools = ToolBar(size_hint_y=0.15)
-        self.sBox = TextInput(
+        self.importBox = ToolBar(size_hint_y=0.15)
+        self.box.add_widget(self.importBox)
+
+        self.searchBox = TextInput(
             text="",
             size_hint_y=0.15,
             multiline=False,
             on_text_validate=self.findWords
         )
-        self.word = WordScreen(self.sBox.text)
+        self.box.add_widget(self.searchBox)
 
-        self.refreshWidgets("")
-        return self.box
-
-    def findWords(self, value):
-        self.refreshWidgets('')
-
-    def refreshWidgets(self, instance):
-
-        self.word = WordScreen(self.sBox.text)
-
-        self.box.clear_widgets()
-        # self.box.add_widget(self.tools)
-        self.box.add_widget(self.sBox)
+        self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
-        self.box.add_widget(
-            Button(
-                text='Refresh Window',
-                on_press=self.refreshWidgets,
-                size_hint_y=0.075
-            )
-        )
+
+        self.add_widget(self.box)
+
+    def findWords(self, event):
+        # self.word = WordBlock(findTxt=self.searchBox.text)
+        print(event.text)
+        
+        self.box.remove_widget(self.word)
+        self.word = WordGrid(findTxt=event.text)
+        self.box.add_widget(self.word)
+        pass
+
+
+
+sm = ScreenManager()
+sm.add_widget(WordBlock())
+sm.add_widget(SettingsScreen())
+
+class WordBlock(App):
+    """ this is the app controller that is the root of the gui """
+
+    def build(self):
+        sm.current = '_word_block_'
+        return sm
