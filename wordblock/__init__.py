@@ -1,2 +1,2 @@
-from .block import WordBlock  # noqa: F401
-from .addWords import AddWordsApp  # noqa: F401
+from .words import WordBlock  # noqa: F401
+from .settings import AddWordsApp  # noqa: F401

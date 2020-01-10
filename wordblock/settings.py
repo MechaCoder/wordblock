@@ -47,7 +47,6 @@ class UrlLayout(GridLayout):
         self.urlText.disabled == False
         self.importBtn.disabled == False
 
-
 class AddSingle(GridLayout):
 
     def __init__(self, **kwargs):
@@ -138,7 +137,6 @@ class WordsListLayout(GridLayout):
 
         popup.content = g
         popup.open()        
-        
 
 class AddWordsApp(App):
 
@@ -176,39 +174,3 @@ class AddWordsApp(App):
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
         self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))
-        
-class SettingsScreen(Screen):
-    
-    def __init__(self, **kw):
-        super().__init__(**kw)
-        self.box = BoxLayout(orientation='vertical', spacing=5)
-
-        self.urlPanel = UrlLayout(size_hint_y=1)
-        self.addSingle = AddSingle(size_hint_y=1)
-
-        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
-        self.wordList.bind(minimum_height=self.wordList.setter('height'))
-        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 200))
-        self.scrollList.add_widget(self.wordList)
-
-        self.box.add_widget(self.urlPanel)
-        self.box.add_widget(self.addSingle)
-        self.box.add_widget(self.scrollList)
-
-        self.add_widget(self.box)
-
-    def refreshList(self, inst):
-        self.box.clear_widgets()
-
-        self.urlPanel = UrlLayout(size_hint_y=1)
-        self.addSingle = AddSingle(size_hint_y=1)
-        
-        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
-        self.wordList.bind(minimum_height=self.wordList.setter('height'))
-        
-        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 200))
-        self.scrollList.add_widget(self.wordList)
-
-        self.box.add_widget(self.urlPanel)
-        self.box.add_widget(self.addSingle)
-        self.box.add_widget(self.scrollList)
