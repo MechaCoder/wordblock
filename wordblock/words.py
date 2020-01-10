@@ -12,7 +12,7 @@ from kivy.clock import Clock
 from .data import Word
 from .utils import importer, isURLValid
 from .speaker import speak
-from .addWords import SettingsScreen
+from .settings import *
 from clipPad import Clipper
 
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -39,7 +39,6 @@ class ToolBar(GridLayout):
     def on_press_callback(self, ints):
         sm.current = '_settings_'
         pass
-
 
 class WordGrid(GridLayout):
 
@@ -94,7 +93,50 @@ class WordBlock(Screen):
         self.box.add_widget(self.word)
         pass
 
+class SettingsScreen(Screen):
+    
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.box = BoxLayout(orientation='vertical', spacing=5)
 
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
+
+        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
+        self.wordList.bind(minimum_height=self.wordList.setter('height'))
+        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 200))
+        self.scrollList.add_widget(self.wordList)
+
+        self.box.add_widget(Button(text='Word List', on_press=self.changePanel))
+        self.box.add_widget(self.urlPanel)
+        self.box.add_widget(self.addSingle)
+        self.box.add_widget(self.scrollList)
+
+        self.add_widget(self.box)
+
+    def refreshList(self, inst):
+        self.box.clear_widgets()
+
+        self.urlPanel = UrlLayout(size_hint_y=1)
+        self.addSingle = AddSingle(size_hint_y=1)
+        
+        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
+        self.wordList.bind(
+            minimum_height=self.wordList.setter('height')
+        )
+        
+        self.scrollList = ScrollView(
+            size_hint=(1, None),
+            size=(Window.width, 200)
+        )
+        self.scrollList.add_widget(self.wordList)
+
+        self.box.add_widget(self.urlPanel)
+        self.box.add_widget(self.addSingle)
+        self.box.add_widget(self.scrollList)
+
+    def changePanel(self, inst):
+        sm.current = '_word_block_'
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
