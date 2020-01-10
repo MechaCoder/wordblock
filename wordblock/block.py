@@ -1,3 +1,5 @@
+from random import randint
+
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -5,6 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
+from kivy.clock import Clock
 
 from .data import Word
 from .utils import importer, isURLValid
@@ -22,7 +25,6 @@ Builder.load_string("""
     name: '_settings_'
 """)
 
-
 class ToolBar(GridLayout):
 
     def __init__(self, **kwargs):
@@ -35,7 +37,6 @@ class ToolBar(GridLayout):
         self.add_widget(self.btn)
 
     def on_press_callback(self, ints):
-        print('text')
         sm.current = '_settings_'
         pass
 
@@ -60,7 +61,6 @@ class WordGrid(GridLayout):
 
 class WordBlock(Screen):
 
-
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
@@ -84,14 +84,13 @@ class WordBlock(Screen):
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
 
+        Clock.schedule_interval(self.findWords, 1)
+
         self.add_widget(self.box)
 
     def findWords(self, event):
-        # self.word = WordBlock(findTxt=self.searchBox.text)
-        print(event.text)
-        
         self.box.remove_widget(self.word)
-        self.word = WordGrid(findTxt=event.text)
+        self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
         pass
 
