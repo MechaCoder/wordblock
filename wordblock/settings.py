@@ -3,7 +3,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
-from kivy.uix.screenmanager import Screen
 
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
@@ -24,7 +23,7 @@ class UrlLayout(GridLayout):
         super().__init__(**kwargs)
 
         self.cols = 3
-        
+
         self.urlText = TextInput(
             text=""
         )
@@ -34,18 +33,19 @@ class UrlLayout(GridLayout):
         self.add_widget(Label(text='Url page import'))
         self.add_widget(self.urlText)
         self.add_widget(self.importBtn)
-    
+
     def on_click(self, inst):
         if isURLValid(self.urlText.text) is False:
             return False
 
-        self.urlText.disabled == True
-        self.importBtn.disabled == True
-        
+        self.urlText.disabled = True
+        self.importBtn.disabled = True
+
         importer(self.urlText.text)
 
-        self.urlText.disabled == False
-        self.importBtn.disabled == False
+        self.urlText.disabled = False
+        self.importBtn.disabled = False
+
 
 class AddSingle(GridLayout):
 
@@ -79,6 +79,7 @@ class AddSingle(GridLayout):
         self.btn.disabled = False
         return True
 
+
 class WordsListLayout(GridLayout):
 
     def __init__(self, **kwargs):
@@ -91,7 +92,7 @@ class WordsListLayout(GridLayout):
 
         self.clear_widgets()
 
-        wordsList = sorted( Word().all(), key = lambda i: i['word'])
+        wordsList = sorted(Word().all(), key=lambda i: i['word'])
         for word in wordsList:
             row = GridLayout()
             row.rows = 1
@@ -99,10 +100,15 @@ class WordsListLayout(GridLayout):
             row.size_hint_y = None
 
             row.add_widget(
-                Label(text=f'{word["word"]}', size_hint_y=None, height=40 )
+                Label(text=f'{word["word"]}', size_hint_y=None, height=40)
             )
 
-            btn = Button(text=f'delete', size_hint_y=None, height=40, on_press=self.deleteCb)
+            btn = Button(
+                text=f'delete',
+                size_hint_y=None,
+                height=40,
+                on_press=self.deleteCb
+            )
             btn.rowId = word['id']
             btn.word = word['word']
 
@@ -122,7 +128,7 @@ class WordsListLayout(GridLayout):
 
         delBtn = Button(
             text='Delete',
-            on_press=lambda i: Word().removeById([inst.rowId]) and popup.dismiss()
+            on_press=lambda i: (Word().removeById([inst.rowId]) and popup.dismiss()) # noqa E501
         )
 
         g.add_widget(
@@ -136,26 +142,31 @@ class WordsListLayout(GridLayout):
         )
 
         popup.content = g
-        popup.open()        
+        popup.open()
+
 
 class AddWordsApp(App):
 
     def build(self):
         self.title = 'Settings'
         self.box = BoxLayout(orientation='vertical', spacing=5)
-        
+
         self.urlPanel = UrlLayout(size_hint_y=1)
         self.addSingle = AddSingle(size_hint_y=1)
-        
+
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
-        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 400))
+        self.scrollList = ScrollView(
+            size_hint=(1, None), size=(Window.width, 400)
+        )
         self.scrollList.add_widget(self.wordList)
-        
+
         self.box.add_widget(self.urlPanel)
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
-        self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))
+        self.box.add_widget(
+            Button(text='refresh list', on_press=self.refreshList)
+        )
         return self.box
 
     def refreshList(self, inst):
@@ -163,14 +174,19 @@ class AddWordsApp(App):
 
         self.urlPanel = UrlLayout(size_hint_y=1)
         self.addSingle = AddSingle(size_hint_y=1)
-        
+
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
-        
-        self.scrollList = ScrollView(size_hint=(1, None), size=(Window.width, 400))
+
+        self.scrollList = ScrollView(
+            size_hint=(1, None),
+            size=(Window.width, 400)
+        )
         self.scrollList.add_widget(self.wordList)
 
         self.box.add_widget(self.urlPanel)
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
-        self.box.add_widget(Button(text='refresh list', on_press=self.refreshList))
+        self.box.add_widget(
+            Button(text='refresh list', on_press=self.refreshList)
+        )
