@@ -59,8 +59,6 @@ class PannelToolBar(GridLayout):
             sm.current = '_prefences_'
             return False
 
-        
-
 
 class ToolBar(GridLayout):
 
@@ -143,14 +141,20 @@ class SettingsScreen(Screen):
         self.addSingle = AddSingle(size_hint_y=1)
 
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
+        
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
+        
         self.scrollList = ScrollView(
             size_hint=(1, None),
             size=(Window.width, 200)
         )
         self.scrollList.add_widget(self.wordList)
 
-        self.box.add_widget(PannelToolBar())
+        self.pannels = PannelToolBar()
+        self.pannels.size_hint_y = 1.75
+
+        self.box.add_widget(self.pannels)
+        
         self.box.add_widget(self.urlPanel)
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
