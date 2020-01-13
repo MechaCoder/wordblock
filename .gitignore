@@ -2,3 +2,4 @@ _play*.py
 ds.json
 build/*
 dist/*
+ds.test.json

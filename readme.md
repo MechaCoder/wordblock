@@ -9,6 +9,8 @@ WordBlock is an app that works is a very similar way, another property app word 
 
 ## Code style
 
++ useing standard `flake8`
+
 ### built with
 
 + Python3.7
@@ -17,3 +19,9 @@ WordBlock is an app that works is a very similar way, another property app word 
 + beautifulsoup 4
 + fuzzywuzzy
 + pyttsx3
+
+### How to run
+
+#### 1 - From Repo
+
+if you useing the repo then the project's dependcy are useing pipenv, to run simply run run `pipenv install` and `pipenv run run`.
