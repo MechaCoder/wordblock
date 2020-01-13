@@ -22,7 +22,44 @@ Builder.load_string("""
     name: '_word_block_'
 <SettingsScreen>
     name: '_settings_'
+<PrefencesScreen>
+    name: '_prefences_'
 """)
+
+class PannelToolBar(GridLayout):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.btn_wordblock = Button(text='word block', on_press=self.change_screen)
+        self.btn_setting = Button(text='settings', on_press=self.change_screen)
+        self.btn_prefences = Button(text='prefences', on_press=self.change_screen)
+
+        # screenName = str(sm.current_screen)[14:-2]
+
+        self.cols = 3
+        self.size_hint_y = 0.25
+    
+        self.add_widget(self.btn_wordblock)
+        self.add_widget(self.btn_setting)
+        self.add_widget(self.btn_prefences)
+
+    def change_screen(self,inst):
+        
+
+        if inst.text == self.btn_wordblock.text:
+            sm.current = '_word_block_'
+            return True
+
+        if inst.text == self.btn_setting.text:
+            sm.current = '_settings_'
+            return True
+
+        if inst.text == self.btn_prefences.text:
+            sm.current = '_prefences_'
+            return False
+
+        
 
 
 class ToolBar(GridLayout):
@@ -71,7 +108,7 @@ class WordBlock(Screen):
             spacing=5
         )
 
-        self.importBox = ToolBar(size_hint_y=0.15)
+        self.importBox = PannelToolBar()
         self.box.add_widget(self.importBox)
 
         self.searchBox = TextInput(
@@ -113,9 +150,7 @@ class SettingsScreen(Screen):
         )
         self.scrollList.add_widget(self.wordList)
 
-        self.box.add_widget(
-            Button(text='Word List', on_press=self.changePanel)
-        )
+        self.box.add_widget(PannelToolBar())
         self.box.add_widget(self.urlPanel)
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
@@ -144,12 +179,30 @@ class SettingsScreen(Screen):
         self.box.add_widget(self.scrollList)
 
     def changePanel(self, inst):
-        sm.current = '_word_block_'
+        if inst.text == 'Word List':
+            sm.current = '_word_block_'
+            return True
+        
+        if inst.text == 'Prefences':
+            sm.current = '_prefences_'
+
+
+class PrefencesScreen(Screen):
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.add_widget(PannelToolBar())
+
+        # self.add_widget(
+        #     Button(text='test')
+        # )
 
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
 sm.add_widget(SettingsScreen())
+sm.add_widget(PrefencesScreen())
 
 
 class WordBlock(App):
