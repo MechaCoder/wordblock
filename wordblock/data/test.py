@@ -1,6 +1,5 @@
 from unittest import TestCase
 from random import randint, choice
-# from string import lowercase
 from string import ascii_lowercase
 
 from .base import DatabaseBase
