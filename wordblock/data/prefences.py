@@ -11,7 +11,10 @@ class Prefences(DatabaseBase):
     def __init__(self, filelocation='./ds.json', table=__name__):
         super().__init__(filelocation=filelocation, table=table)
 
-    def set(self, tag:str, value:str):
+        if self.settingExists('speak') is False:
+            self.set('speak', True)
+
+    def set(self, tag:str, value):
 
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
@@ -34,3 +37,12 @@ class Prefences(DatabaseBase):
 
         return self.__outputRow__(row)
 
+    def settingExists(self, tag:str):
+
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        existing = tbl.contains(Query().tag == tag)
+        tdb.close()
+
+        return existing

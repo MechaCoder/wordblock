@@ -12,6 +12,7 @@ from kivy.uix.scrollview import ScrollView
 from .data import Word
 from .speaker import speak
 from .settings import WordsListLayout, UrlLayout, AddSingle
+from .prefences import PrefencesGui
 from clipPad import Clipper
 
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -196,12 +197,13 @@ class PrefencesScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
 
-        self.add_widget(PannelToolBar())
+        # self.add_widget(PannelToolBar())
+        
+        self.box = BoxLayout(orientation='vertical', spacing=5)
+        self.box.add_widget(PannelToolBar())
+        self.box.add_widget(PrefencesGui())
 
-        # self.add_widget(
-        #     Button(text='test')
-        # )
-
+        self.add_widget(self.box)
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
