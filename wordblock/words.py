@@ -187,5 +187,4 @@ class WordBlock(App):
 
     def build(self):
         sm.current = '_word_block_'
-        sm.current = '_settings_'
         return sm
