@@ -9,7 +9,7 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 
-from .data import Word
+from .data import Word, Prefences
 from .speaker import speak
 from .settings import WordsListLayout, UrlLayout, AddSingle
 from .prefences import PrefencesGui
@@ -93,7 +93,8 @@ class WordGrid(GridLayout):
 
     def onPress(self, instance):
         Clipper().copy(instance.text)
-        speak(instance.text)
+        if Prefences().get('speak')['val']:
+            speak(instance.text)
 
 
 class WordBlock(Screen):
@@ -196,8 +197,6 @@ class PrefencesScreen(Screen):
 
     def __init__(self, **kw):
         super().__init__(**kw)
-
-        # self.add_widget(PannelToolBar())
         
         self.box = BoxLayout(orientation='vertical', spacing=5)
         self.box.add_widget(PannelToolBar())
