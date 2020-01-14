@@ -20,15 +20,12 @@ class PrefencesGui(GridLayout):
         self.pref = Prefences()
         speakVal = self.pref.get('speak')['val']
 
-        self.add_widget(Label(text='app will speak words'))
-
         ch = Switch(active=speakVal)
         ch.bind(active=self.callback)
 
+
+        self.add_widget(Label(text='app will speak words'))
         self.add_widget(ch)
 
     def callback(self, inst, value):
         self.pref.set('speak', value)
-        
-
-        
