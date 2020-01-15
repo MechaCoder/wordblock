@@ -9,8 +9,6 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
-from kivy.clock import Clock
-
 from .data import Word
 from .utils import importer
 from .utils import isURLValid
@@ -141,15 +139,13 @@ class WordsListLayout(GridLayout):
             )
         )
 
-        popup.content = g
-        popup.open()
+        self.popup.content = g
+        self.popup.open()
 
-    def deleteWord(self, rowId:list):
+    def deleteWord(self, rowId: list):
         Word().removeById(rowId)
         self.popup.dismiss()
         self.buildList()
-
-    
 
 
 class AddWordsApp(App):

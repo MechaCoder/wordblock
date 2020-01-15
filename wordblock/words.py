@@ -5,7 +5,6 @@ from kivy.uix.textinput import TextInput
 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
-from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 
@@ -27,27 +26,32 @@ Builder.load_string("""
     name: '_prefences_'
 """)
 
+
 class PannelToolBar(GridLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.btn_wordblock = Button(text='word block', on_press=self.change_screen)
+        self.btn_wordblock = Button(
+            text='word block',
+            on_press=self.change_screen
+        )
         self.btn_setting = Button(text='settings', on_press=self.change_screen)
-        self.btn_prefences = Button(text='prefences', on_press=self.change_screen)
+        self.btn_prefences = Button(
+            text='prefences',
+            on_press=self.change_screen
+        )
 
         # screenName = str(sm.current_screen)[14:-2]
 
         self.cols = 3
         self.size_hint_y = 0.25
-    
+
         self.add_widget(self.btn_wordblock)
         self.add_widget(self.btn_setting)
         self.add_widget(self.btn_prefences)
 
-    def change_screen(self,inst):
-        
-
+    def change_screen(self, inst):
         if inst.text == self.btn_wordblock.text:
             sm.current = '_word_block_'
             return True
@@ -155,9 +159,9 @@ class SettingsScreen(Screen):
         self.addSingle = AddSingle(size_hint_y=1)
 
         self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
-        
+
         self.wordList.bind(minimum_height=self.wordList.setter('height'))
-        
+
         self.scrollList = ScrollView(
             size_hint=(1, None),
             size=(Window.width, 175)
@@ -168,7 +172,7 @@ class SettingsScreen(Screen):
         self.pannels.size_hint_y = 1.75
 
         self.box.add_widget(self.pannels)
-        
+
         self.box.add_widget(self.urlPanel)
         self.box.add_widget(self.addSingle)
         self.box.add_widget(self.scrollList)
@@ -176,17 +180,17 @@ class SettingsScreen(Screen):
         self.add_widget(self.box)
 
 
-
 class PrefencesScreen(Screen):
 
     def __init__(self, **kw):
         super().__init__(**kw)
-        
+
         self.box = BoxLayout(orientation='vertical', spacing=5)
         self.box.add_widget(PannelToolBar())
         self.box.add_widget(PrefencesGui())
 
         self.add_widget(self.box)
+
 
 sm = ScreenManager()
 sm.add_widget(WordBlock())
