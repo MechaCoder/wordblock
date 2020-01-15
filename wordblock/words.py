@@ -88,8 +88,13 @@ class WordGrid(GridLayout):
         self.block = {}
 
         for word in Word().readFindString(self.serchTerm):
-            self.block[word] = Button(text=word, on_press=self.onPress)
-            self.add_widget(self.block[word])
+
+            if Prefences().get('makeCaps')['val']:
+                word = word.upper()
+
+
+            self.block[word.lower()] = Button(text=word, on_press=self.onPress)
+            self.add_widget(self.block[word.lower()])
 
     def onPress(self, instance):
         Clipper().copy(instance.text)
@@ -117,6 +122,8 @@ class WordBlock(Screen):
             multiline=False,
             on_text_validate=self.findWords
         )
+        self.searchBox.bind(text=self.onTextChange)
+
         self.box.add_widget(self.searchBox)
 
         self.word = WordGrid(findTxt=self.searchBox.text)
@@ -131,6 +138,13 @@ class WordBlock(Screen):
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
         pass
+
+    def onTextChange(self, instance, value):
+        # print('The widget', instance, 'have:', value)
+        self.box.remove_widget(self.word)
+        self.word = WordGrid(findTxt=self.searchBox.text)
+        self.box.add_widget(self.word)
+
 
 
 class SettingsScreen(Screen):

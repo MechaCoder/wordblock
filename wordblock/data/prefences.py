@@ -14,6 +14,9 @@ class Prefences(DatabaseBase):
         if self.settingExists('speak') is False:
             self.set('speak', True)
 
+        if self.settingExists('makeCaps') is False:
+            self.set('makeCaps', False)
+
     def set(self, tag:str, value):
 
         tdb = TinyDB(self.file)
