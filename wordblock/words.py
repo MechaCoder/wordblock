@@ -92,7 +92,6 @@ class WordGrid(GridLayout):
             if Prefences().get('makeCaps')['val']:
                 word = word.upper()
 
-
             self.block[word.lower()] = Button(text=word, on_press=self.onPress)
             self.add_widget(self.block[word.lower()])
 
@@ -123,28 +122,27 @@ class WordBlock(Screen):
             on_text_validate=self.findWords
         )
         self.searchBox.bind(text=self.onTextChange)
-
         self.box.add_widget(self.searchBox)
-
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
-
-        Clock.schedule_interval(self.findWords, 1)
-
+        self.findWords()
         self.add_widget(self.box)
 
-    def findWords(self, event):
+    def findWords(self):
         self.box.remove_widget(self.word)
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
-        pass
 
     def onTextChange(self, instance, value):
-        # print('The widget', instance, 'have:', value)
         self.box.remove_widget(self.word)
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
 
+    def on_enter(self):
+        super().on_enter()
+        self.box.remove_widget(self.word)
+        self.word = WordGrid(findTxt=self.searchBox.text)
+        self.box.add_widget(self.word)
 
 
 class SettingsScreen(Screen):

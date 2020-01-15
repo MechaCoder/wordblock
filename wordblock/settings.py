@@ -86,7 +86,7 @@ class WordsListLayout(GridLayout):
         super().__init__(**kwargs)
 
         self.cols = 6
-        Clock.schedule_interval(self.buildList, 10)
+        self.buildList()
 
     def buildList(self, b=None):
 
@@ -117,7 +117,7 @@ class WordsListLayout(GridLayout):
 
     def deleteCb(self, inst):
 
-        popup = Popup(
+        self.popup = Popup(
             title='are you sure you want to delete {}'.format(inst.word),
             size_hint=(None, None),
             size=(400, 200),
@@ -128,7 +128,7 @@ class WordsListLayout(GridLayout):
 
         delBtn = Button(
             text='Delete',
-            on_press=lambda i: (Word().removeById([inst.rowId]) and popup.dismiss()) # noqa E501
+            on_press=lambda i: self.deleteWord([inst.rowId]) # noqa E501
         )
 
         g.add_widget(
@@ -137,12 +137,19 @@ class WordsListLayout(GridLayout):
         g.add_widget(
             Button(
                 text="Cancel",
-                on_press=popup.dismiss
+                on_press=self.popup.dismiss
             )
         )
 
         popup.content = g
         popup.open()
+
+    def deleteWord(self, rowId:list):
+        Word().removeById(rowId)
+        self.popup.dismiss()
+        self.buildList()
+
+    
 
 
 class AddWordsApp(App):
