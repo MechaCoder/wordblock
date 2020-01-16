@@ -102,9 +102,9 @@ class WordGrid(GridLayout):
             self.add_widget(self.block[word.lower()])
 
     def onPress(self, instance):
-        wordRow = Word().getRowByWord(instance.text)
+        wordRow = Word().getRowByWord(instance.text.lower())
         WordUseage().insert(wordRow['id'])
-        Clipper().copy(instance.text)
+        Clipper().copy(instance.text.lower())
         if Prefences().get('speak')['val']:
             speak(instance.text)
 
