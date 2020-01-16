@@ -1,8 +1,8 @@
 from kivy.uix.button import Button
-from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
-def popUp(msg:str = ''):
+
+def popUp(msg: str = ''):
 
     popObj = Popup(
         title=msg,

@@ -22,6 +22,11 @@ class DatabaseBase:
     def __outputRow__(self, doc: Document):
         """ returns a dict of the id and all the keys within the document """
 
+        if doc == None:
+            raise DatabaseException(
+                'No row has been found'
+            )
+
         if isinstance(doc, Document) is False:
             raise DatabaseException(
                 'the object passed must be a `tinydb.database.Document`.'

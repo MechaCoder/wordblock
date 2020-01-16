@@ -1,6 +1,31 @@
 from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 from fuzzywuzzy import process
 
+def getWordsFromUrl(url:str, wordSize:int = 5):
+    
+    httpObj = urlopen(url)
+    html = httpObj.read().decode('utf8')
+    httpObj.close()
+
+    wordList = []
+    for tag in BeautifulSoup(html, 'html.parser').select('p'):
+
+        for word in tag.text.split():
+            if len(word) < wordSize:
+                continue
+
+            if word in wordList:
+                continue
+
+            if vaildWords(word) is False:
+                continue
+            
+            if word not in wordList:
+                wordList.append(word)
+
+    return wordList
 
 def vaildWords(word: str):
     word = word.lower()
@@ -27,6 +52,13 @@ class Word(DatabaseBase):
         `wordblock.data.words` """
         super().__init__(filelocation=filelocation, table=table)
         self.normalise()
+
+        if len(self.all()) == 0:
+            for word in getWordsFromUrl('https://en.wikipedia.org/wiki/Dyslexia'):
+                try:
+                    self.insert(word)
+                except:
+                    pass
 
     def insert(self, word: str):
         """ insert a new word to the table """
@@ -83,3 +115,12 @@ class Word(DatabaseBase):
             doneWords.append(word['word'].lower())
 
         return self.removeById(idsList)
+
+    def getRowByWord(self, word:str):
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        row = tbl.get(Query().word == word)
+
+        tdb.close()
+        return self.__outputRow__(row)
