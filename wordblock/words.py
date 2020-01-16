@@ -8,7 +8,7 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
 
-from .data import Word, Prefences
+from .data import Word, Prefences, WordUseage
 from .speaker import speak
 from .settings import WordsListLayout, UrlLayout, AddSingle
 from .prefences import PrefencesGui
@@ -91,6 +91,7 @@ class WordGrid(GridLayout):
         self.cols = 10
         self.block = {}
 
+        # wordsList = Word().readFindString(self.serchTerm):
         for word in Word().readFindString(self.serchTerm):
 
             if Prefences().get('makeCaps')['val']:
@@ -100,6 +101,8 @@ class WordGrid(GridLayout):
             self.add_widget(self.block[word.lower()])
 
     def onPress(self, instance):
+        wordRow = Word().getRowByWord(instance.text)
+        WordUseage().insert(wordRow['id'])
         Clipper().copy(instance.text)
         if Prefences().get('speak')['val']:
             speak(instance.text)
@@ -127,8 +130,10 @@ class WordBlock(Screen):
         )
         self.searchBox.bind(text=self.onTextChange)
         self.box.add_widget(self.searchBox)
+        
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
+        
         self.findWords()
         self.add_widget(self.box)
 

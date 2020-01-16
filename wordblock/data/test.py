@@ -5,6 +5,7 @@ from string import ascii_lowercase
 from .base import DatabaseBase
 from .words import Word
 from .prefences import Prefences
+from .wordUseage import WordUseage
 
 def _makeRandomString(self, strLength:int = 10):
 
@@ -83,3 +84,38 @@ class Test_Prefences(TestCase):
 
             obj = Prefences(self.fileLoc).get('testPref')
             self.assertIsInstance(obj, dict)
+
+class Test_WordUseage(TestCase):
+
+    def setUp(self):
+        self.fileLoc = './ds.test.json'
+        return super().setUp()
+
+    def test_insert(self):
+    
+        obj = WordUseage(self.fileLoc)
+
+        for i in range(50):
+            rowid = obj.insert(
+                randint(0, 10000)
+            )
+
+            self.assertIsInstance(
+                rowid,
+                int
+            )
+
+    def test_getCounts(self):
+        obj = WordUseage(self.fileLoc).getCounts()
+
+        self.assertIsInstance(
+            obj,
+            dict
+        )
+
+        for k in obj.keys():
+            self.assertIsInstance(
+                k,
+                int
+            )
+

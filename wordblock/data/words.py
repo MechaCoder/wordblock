@@ -115,3 +115,12 @@ class Word(DatabaseBase):
             doneWords.append(word['word'].lower())
 
         return self.removeById(idsList)
+
+    def getRowByWord(self, word:str):
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        row = tbl.get(Query().word == word)
+
+        tdb.close()
+        return self.__outputRow__(row)
