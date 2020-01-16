@@ -9,14 +9,21 @@ def getCountPannel(findStr:str):
     wordCounts = WordUseage().getCounts()
     allWords = wordObj.readFindString(findStr)
     sortedWords = []
+    wordsCount = []
+    wordsCountWithoutCount = []
 
     for word in allWords:
         row = wordObj.getRowByWord(word)
         row['count'] = 0
         if row['id'] in wordCounts.keys():
             row['count'] = wordCounts[ row['id'] ]
-        
-        sortedWords.append(row)
-    sortedWords = sorted(sortedWords, key=lambda i: i['count'])
-    sortedWords.reverse()
+            wordsCount.append(row)
+            continue
+        wordsCountWithoutCount.append(row)
+    
+    wordsCount = sorted(wordsCount, key=lambda i: i['count'])
+    wordsCount.reverse()
+
+    wordsCountWithoutCount = sorted(wordsCountWithoutCount, key=lambda i: i['word'])
+    sortedWords = wordsCount + wordsCountWithoutCount
     return sortedWords
