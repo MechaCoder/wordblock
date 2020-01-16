@@ -4,19 +4,19 @@ from .wordUseage import WordUseage # noqa: F401
 
 def getCountPannel(findStr:str):
 
+    wordObj = Word()
+
     wordCounts = WordUseage().getCounts()
-    allWords = Word().readFindString(findStr)
+    allWords = wordObj.readFindString(findStr)
+    sortedWords = []
 
-
-    for wordRow in allWords:
-        wordRow['count'] = 0
-        if wordRow['id'] in wordCounts.keys():
-            wordRow['count'] = wordCounts[ wordRow['id'] ]
-
-    sortedWords = sorted(
-        allWords,
-        key=lambda i: i['count']
-    )
+    for word in allWords:
+        row = wordObj.getRowByWord(word)
+        row['count'] = 0
+        if row['id'] in wordCounts.keys():
+            row['count'] = wordCounts[ row['id'] ]
+        
+        sortedWords.append(row)
+    sortedWords = sorted(sortedWords, key=lambda i: i['count'])
     sortedWords.reverse()
     return sortedWords
-    
