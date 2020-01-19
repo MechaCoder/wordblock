@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['wordblock.py'],
+a = Analysis(['wordblock_app.py'],
              pathex=['/home/commander/project/python/wordBlock'],
              binaries=[],
              datas=[],
@@ -21,7 +21,7 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='wordblock',
+          name='wordblock_app',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -34,4 +34,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='wordblock')
+               name='wordblock_app')
