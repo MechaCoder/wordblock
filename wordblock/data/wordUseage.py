@@ -1,6 +1,7 @@
 from time import time_ns
 from .base import DatabaseBase, TinyDB
 
+
 class WordUseage(DatabaseBase):
 
     def __init__(self, filelocation='./ds.json', table=__name__):

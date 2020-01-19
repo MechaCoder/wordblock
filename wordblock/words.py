@@ -131,10 +131,10 @@ class WordBlockScreen(Screen):
         )
         self.searchBox.bind(text=self.onTextChange)
         self.box.add_widget(self.searchBox)
-        
+
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
-        
+
         self.findWords()
         self.add_widget(self.box)
 
@@ -196,4 +196,3 @@ class PrefencesScreen(Screen):
         self.box.add_widget(PrefencesGui())
 
         self.add_widget(self.box)
-

@@ -126,7 +126,7 @@ class WordsListLayout(GridLayout):
 
         delBtn = Button(
             text='Delete',
-            on_press=lambda i: self.deleteWord([inst.rowId]) # noqa E501
+            on_press=lambda i: self.deleteWord([inst.rowId])  # noqa E501
         )
 
         g.add_widget(
