@@ -16,6 +16,7 @@ pyttsx3 = "*"
 pyinstaller = "*"
 flake8 = "*"
 autopep8 = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"

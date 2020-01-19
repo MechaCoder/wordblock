@@ -21,5 +21,5 @@ class Clipper:
             pyperclip.copy(msg)
         except pyperclip.PyperclipException:
             raise ClipperException(
-                "There has been been issue with pyperclip. \n make sure you have xsel or xclip installed" # noqa E501
+                "There has been been issue with pyperclip. \n make sure you have xsel or xclip installed"  # noqa E501
             )

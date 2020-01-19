@@ -3,8 +3,6 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 
-from wordblock.words import *
-
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -23,16 +21,9 @@ from clipPad import Clipper
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 
+
 Builder.load_string("""
 <WordBlockScreen>
-    name: '_word_block_'
-<SettingsScreen>
-    name: '_settings_block_'
-""")
-
-
-Builder.load_string("""
-<WordBlock>
     name: '_word_block_'
 <SettingsScreen>
     name: '_settings_'
