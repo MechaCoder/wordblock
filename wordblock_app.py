@@ -31,24 +31,6 @@ Builder.load_string("""
 """)
 
 
-from kivy.app import App
-from kivy.uix.button import Button
-from kivy.uix.textinput import TextInput
-
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.core.window import Window
-from kivy.uix.scrollview import ScrollView
-
-from wordblock.data import Word, Prefences, WordUseage, getCountPannel
-from wordblock.speaker import speak
-from wordblock.settings import WordsListLayout, UrlLayout, AddSingle
-from wordblock.prefences import PrefencesGui
-from clipPad import Clipper
-
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.lang import Builder
-
 Builder.load_string("""
 <WordBlock>
     name: '_word_block_'
@@ -163,10 +145,10 @@ class WordBlockScreen(Screen):
         )
         self.searchBox.bind(text=self.onTextChange)
         self.box.add_widget(self.searchBox)
-        
+
         self.word = WordGrid(findTxt=self.searchBox.text)
         self.box.add_widget(self.word)
-        
+
         self.findWords()
         self.add_widget(self.box)
 
@@ -241,6 +223,7 @@ class MainApp(App):
     def build(self):
         sm.current = '_word_block_'
         return sm
+
 
 if __name__ == '__main__':
     Window.size = (1500, 300)

@@ -15,12 +15,14 @@ python-levenshtein = "*"
 pyttsx3 = "*"
 pyinstaller = "*"
 flake8 = "*"
+autopep8 = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
 styleCheck = "flake8 ./*/*.py"
+autostyle = "autopep8 --in-place --aggressive --aggressive"
 run = "python ./wordblock_app.py"
 test = "python ./tests.py"
 install = "pyinstaller ./wordblock_app.spec"
