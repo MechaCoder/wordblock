@@ -21,5 +21,6 @@ python_version = "3.7"
 
 [scripts]
 pep8 = "flake8 ./*/*.py"
-run = "python ./wordblock.py"
+run = "python ./wordblock_app.py"
 test = "python ./tests.py"
+install = "pyinstaller ./wordblock_app.spec"
