@@ -243,4 +243,5 @@ class MainApp(App):
         return sm
 
 if __name__ == '__main__':
+    Window.size = (1500, 300)
     MainApp().run()
