@@ -2,11 +2,7 @@ from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
-
-from kivy.app import App
-from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
-
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
@@ -17,9 +13,6 @@ from wordblock.speaker import speak
 from wordblock.settings import WordsListLayout, UrlLayout, AddSingle
 from wordblock.prefences import PrefencesGui
 from clipPad import Clipper
-
-from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.lang import Builder
 
 
 Builder.load_string("""
