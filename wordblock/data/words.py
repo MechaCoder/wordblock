@@ -41,7 +41,7 @@ def vaildWords(word: str):
         return False
 
     for char in word:
-        if char not in ascii_letters and char not in "-'":
+        if char not in ascii_letters:
             return False
 
     return True
