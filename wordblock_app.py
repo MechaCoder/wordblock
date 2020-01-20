@@ -86,7 +86,7 @@ class WordGrid(GridLayout):
         super().__init__(**kwargs)
 
         self.serchTerm = findTxt
-        self.cols = 10
+        self.cols = 8
         self.block = {}
 
         # wordsList = Word().readFindString(self.serchTerm):

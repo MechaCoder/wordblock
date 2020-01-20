@@ -95,7 +95,7 @@ class Word(DatabaseBase):
 
     def readFindString(self, qStr: str = ''):
         if qStr == '':
-            return self.readAllAsList()[0:70]
+            return self.readAllAsList()[0:72]
 
         words = self.readAllAsList()
         rWords = []
