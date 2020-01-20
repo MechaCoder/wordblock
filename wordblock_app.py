@@ -86,7 +86,7 @@ class WordGrid(GridLayout):
         super().__init__(**kwargs)
 
         self.serchTerm = findTxt
-        self.cols = 10
+        self.cols = 8
         self.block = {}
 
         # wordsList = Word().readFindString(self.serchTerm):
@@ -205,10 +205,12 @@ sm.add_widget(PrefencesScreen())
 class MainApp(App):
 
     def build(self):
+        self.title = "Word Block"
         sm.current = '_word_block_'
         return sm
 
 
 if __name__ == '__main__':
-    Window.size = (1500, 300)
+    fuctWidth = Window.size[0] + (Window.size[0] / 2)
+    Window.size = (fuctWidth, 300)
     MainApp().run()
