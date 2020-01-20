@@ -10,6 +10,7 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 
 from .data import Word
+from .data import WordUseage
 from .utils import importer
 from .utils import isURLValid
 from .ui.popUp import popUp
@@ -90,6 +91,8 @@ class WordsListLayout(GridLayout):
 
         self.clear_widgets()
 
+        obj = WordUseage().getCounts()
+
         wordsList = sorted(Word().all(), key=lambda i: i['word'])
         for word in wordsList:
             row = GridLayout()
@@ -97,8 +100,18 @@ class WordsListLayout(GridLayout):
             row.height = 40
             row.size_hint_y = None
 
+            
+
             row.add_widget(
                 Label(text=f'{word["word"]}', size_hint_y=None, height=40)
+            )
+
+            countValue = 0
+            if word['id'] in obj.keys():
+                countValue = obj[word['id']]
+
+            row.add_widget(
+                Label(text=str(countValue), size_hint_y=None, height=40)
             )
 
             btn = Button(
