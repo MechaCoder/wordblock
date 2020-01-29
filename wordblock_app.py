@@ -34,16 +34,17 @@ class PannelToolBar(GridLayout):
             text='word block',
             on_press=self.change_screen
         )
-        self.btn_setting = Button(text='settings', on_press=self.change_screen)
+        self.btn_setting = Button(
+            text='settings',
+            on_press=self.change_screen
+        )
         self.btn_prefences = Button(
             text='prefences',
             on_press=self.change_screen
         )
 
-        # screenName = str(sm.current_screen)[14:-2]
-
         self.cols = 3
-        self.size_hint_y = 0.25
+        # self.size_hint_y = 0.5
 
         self.add_widget(self.btn_wordblock)
         self.add_widget(self.btn_setting)
@@ -61,22 +62,6 @@ class PannelToolBar(GridLayout):
         if inst.text == self.btn_prefences.text:
             sm.current = '_prefences_'
             return False
-
-
-class ToolBar(GridLayout):
-
-    def __init__(self, **kwargs):
-        """ this is where the Tools for the bar for importing"""
-        super().__init__(**kwargs)
-        self.rows = 1
-        self.height = 10
-
-        self.btn = Button(text='Add Words', on_press=self.on_press_callback)
-        self.add_widget(self.btn)
-
-    def on_press_callback(self, ints):
-        sm.current = '_settings_'
-        pass
 
 
 class WordGrid(GridLayout):
@@ -97,6 +82,7 @@ class WordGrid(GridLayout):
                 word = word.upper()
 
             self.block[word.lower()] = Button(text=word, on_press=self.onPress)
+            self.block[word.lower()].padding = (0.5, 1)
             self.add_widget(self.block[word.lower()])
 
     def onPress(self, instance):
@@ -119,6 +105,8 @@ class WordBlockScreen(Screen):
         )
 
         self.importBox = PannelToolBar()
+        self.importBox.size_hint_y = None
+        self.importBox.height = 30
         self.box.add_widget(self.importBox)
 
         self.searchBox = TextInput(
@@ -157,32 +145,33 @@ class SettingsScreen(Screen):
 
     def __init__(self, **kw):
         super().__init__(**kw)
-        self.box = BoxLayout(orientation='vertical', spacing=5)
 
-        self.urlPanel = UrlLayout(size_hint_y=1)
-        self.addSingle = AddSingle(size_hint_y=1)
-
-        self.wordList = WordsListLayout(spacing=10, size_hint_y=None)
-
-        self.wordList.bind(minimum_height=self.wordList.setter('height'))
-
-        self.scrollList = ScrollView(
-            size_hint=(1, None),
-            size=(Window.width, 175)
+        self.box = BoxLayout(
+            orientation='vertical',
+            spacing=5
         )
-        self.scrollList.add_widget(self.wordList)
 
-        self.pannels = PannelToolBar()
-        self.pannels.size_hint_y = 1.75
+        self.toolbar = PannelToolBar()
+        self.box.add_widget(self.toolbar)
 
-        self.box.add_widget(self.pannels)
+        self.addBtnSingle = AddSingle()
+        self.padding = 50
+        self.box.add_widget(self.addBtnSingle)
 
-        self.box.add_widget(self.urlPanel)
-        self.box.add_widget(self.addSingle)
-        self.box.add_widget(self.scrollList)
+        self.wordLists = WordsListLayout()
+        self.wordLists.bind(
+            minimum_height=self.wordLists.setter('height')
+        )
+
+        self.scroll = ScrollView(
+            size_hint=(1, None),
+            size=(Window.width, 225)
+        )
+
+        self.scroll.add_widget(self.wordLists)
+        self.box.add_widget(self.scroll)
 
         self.add_widget(self.box)
-
 
 class PrefencesScreen(Screen):
 
@@ -190,7 +179,10 @@ class PrefencesScreen(Screen):
         super().__init__(**kw)
 
         self.box = BoxLayout(orientation='vertical', spacing=5)
-        self.box.add_widget(PannelToolBar())
+        self.pannelToolBar = PannelToolBar()
+        self.pannelToolBar.size_hint_y = None
+        self.pannelToolBar.height = 30
+        self.box.add_widget(self.pannelToolBar)
         self.box.add_widget(PrefencesGui())
 
         self.add_widget(self.box)
