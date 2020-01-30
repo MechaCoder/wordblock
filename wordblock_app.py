@@ -1,3 +1,4 @@
+from kivy.config import Config
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -204,4 +205,5 @@ class MainApp(App):
 if __name__ == '__main__':
     fuctWidth = Window.size[0] + (Window.size[0] / 2)
     Window.size = (fuctWidth, 300)
+    Config.set('input', 'mouse', 'mouse,disable_multitouch')
     MainApp().run()
