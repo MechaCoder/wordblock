@@ -157,7 +157,7 @@ class SettingsScreen(Screen):
         self.addBtnSingle = AddSingle()
         self.box.add_widget(self.addBtnSingle)
 
-        self.wordLists = WordsListLayout()
+        self.wordLists = WordsListLayout(spacing=0, size_hint_y=None)
         self.wordLists.bind(
             minimum_height=self.wordLists.setter('height')
         )
