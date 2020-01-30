@@ -17,6 +17,12 @@ WordBlock is an app that works is a very similar way, another property app word 
 * I removed the game clock becouse it killed app proformance
 * the display words are now weighted to provide to provide a weighting to words the users have used before
 
+### v1.3
+
+* Proformace has been imporved.
+* added a more intellgent window width
+* bug fixs and improvesments
+
 ## Code style
 
 useing standard `flake8`
@@ -35,3 +41,7 @@ useing standard `flake8`
 #### 1 - From Repo
 
 if you useing the repo then the project's dependcy are useing pipenv, to run simply run run `pipenv install` and `pipenv run run`. if you see an error you can get a tutoral [here](https://www.youtube.com/watch?v=zDYL22QNiWk)
+
+#### 2 - From installer
+
+you can also run `pipenv run build`. that will build the project, as an installer this means that you should be able to run the project as a single file. i recermend that you do this on the system you want use it on.

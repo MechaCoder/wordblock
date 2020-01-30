@@ -32,7 +32,7 @@ class UrlLayout(GridLayout):
 
         self.importBtn = Button(
             text='import page',
-            on_press=self.on_click, 
+            on_press=self.on_click,
             size_hint_y=None,
             height=stuffHeight
         )
@@ -63,8 +63,16 @@ class AddSingle(GridLayout):
         stuffHeight = 25
 
         # self.add_widget(Label(text='Add single'))
-        self.txtBox = TextInput(text='', multiline=False, size_hint_y=None, height=stuffHeight)
-        self.btn = Button(text='Input Word', on_press=self.onBtnClick, size_hint_y=None, height=stuffHeight)
+        self.txtBox = TextInput(
+            text='',
+            multiline=False,
+            size_hint_y=None,
+            height=stuffHeight)
+        self.btn = Button(
+            text='Input Word',
+            on_press=self.onBtnClick,
+            size_hint_y=None,
+            height=stuffHeight)
 
         self.add_widget(self.txtBox)
         self.add_widget(self.btn)
@@ -108,8 +116,6 @@ class WordsListLayout(GridLayout):
             row.rows = 1
             row.height = 40
             row.size_hint_y = None
-
-            
 
             row.add_widget(
                 Label(text=f'{word["word"]}', size_hint_y=None, height=40)

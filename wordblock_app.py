@@ -173,6 +173,7 @@ class SettingsScreen(Screen):
 
         self.add_widget(self.box)
 
+
 class PrefencesScreen(Screen):
 
     def __init__(self, **kw):
