@@ -155,7 +155,6 @@ class SettingsScreen(Screen):
         self.box.add_widget(self.toolbar)
 
         self.addBtnSingle = AddSingle()
-        self.padding = 50
         self.box.add_widget(self.addBtnSingle)
 
         self.wordLists = WordsListLayout()

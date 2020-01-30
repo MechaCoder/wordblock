@@ -37,7 +37,7 @@ class UrlLayout(GridLayout):
             height=stuffHeight
         )
 
-        self.add_widget(Label(text='Url page import', height=stuffHeight))
+        # self.add_widget(Label(text='Url page import', height=stuffHeight))
         self.add_widget(self.urlText)
         self.add_widget(self.importBtn)
 

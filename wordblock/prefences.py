@@ -1,6 +1,9 @@
 from kivy.uix.label import Label
 from kivy.uix.switch import Switch
 from kivy.uix.gridlayout import GridLayout
+
+from .settings import UrlLayout
+
 from .data import Prefences
 
 
@@ -12,7 +15,6 @@ class PrefencesGui(GridLayout):
         self.cols = 2
 
         self.pref = Prefences()
-        # speakVal = self.pref.get('speak')['val']
 
         # App will speak pref
         ch = Switch(active=self.getSettingValue('speak'))
@@ -24,6 +26,13 @@ class PrefencesGui(GridLayout):
         chMakeCaps.bind(active=self.callbackMakeCaps)
         self.add_widget(Label(text='app will show all words in Caps'))
         self.add_widget(chMakeCaps)
+
+        self.add_widget(
+            Label(text="URL importing")
+        )
+
+        self.urlLayout = UrlLayout()
+        self.add_widget(self.urlLayout)
 
     def callback(self, inst, value):
         self.pref.set('speak', value)
