@@ -3,8 +3,9 @@ from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from fuzzywuzzy import process
 
-def getWordsFromUrl(url:str, wordSize:int = 5):
-    
+
+def getWordsFromUrl(url: str, wordSize: int = 5):
+
     httpObj = urlopen(url)
     html = httpObj.read().decode('utf8')
     httpObj.close()
@@ -21,11 +22,12 @@ def getWordsFromUrl(url:str, wordSize:int = 5):
 
             if vaildWords(word) is False:
                 continue
-            
+
             if word not in wordList:
                 wordList.append(word)
 
     return wordList
+
 
 def vaildWords(word: str):
     word = word.lower()
@@ -39,7 +41,7 @@ def vaildWords(word: str):
         return False
 
     for char in word:
-        if char not in ascii_letters and char not in "-'":
+        if char not in ascii_letters:
             return False
 
     return True
@@ -54,10 +56,11 @@ class Word(DatabaseBase):
         self.normalise()
 
         if len(self.all()) == 0:
-            for word in getWordsFromUrl('https://en.wikipedia.org/wiki/Dyslexia'):
+            for word in getWordsFromUrl(
+                    'https://en.wikipedia.org/wiki/Dyslexia'):
                 try:
                     self.insert(word)
-                except:
+                except BaseException:
                     pass
 
     def insert(self, word: str):
@@ -92,7 +95,7 @@ class Word(DatabaseBase):
 
     def readFindString(self, qStr: str = ''):
         if qStr == '':
-            return self.readAllAsList()[0:70]
+            return self.readAllAsList()[0:72]
 
         words = self.readAllAsList()
         rWords = []
@@ -116,7 +119,7 @@ class Word(DatabaseBase):
 
         return self.removeById(idsList)
 
-    def getRowByWord(self, word:str):
+    def getRowByWord(self, word: str):
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
 

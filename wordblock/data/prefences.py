@@ -6,6 +6,7 @@ from tinydb import TinyDB
 from tinydb import Query  # noqa: F401
 from tinydb.database import Document
 
+
 class Prefences(DatabaseBase):
 
     def __init__(self, filelocation='./ds.json', table=__name__):
@@ -17,7 +18,7 @@ class Prefences(DatabaseBase):
         if self.settingExists('makeCaps') is False:
             self.set('makeCaps', False)
 
-    def set(self, tag:str, value):
+    def set(self, tag: str, value):
 
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
@@ -31,7 +32,7 @@ class Prefences(DatabaseBase):
 
         return True
 
-    def get(self, tag:str):
+    def get(self, tag: str):
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
 
@@ -40,7 +41,7 @@ class Prefences(DatabaseBase):
 
         return self.__outputRow__(row)
 
-    def settingExists(self, tag:str):
+    def settingExists(self, tag: str):
 
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)

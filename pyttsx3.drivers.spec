@@ -3,11 +3,11 @@
 block_cipher = None
 
 
-a = Analysis(['wordblock.py'],
+a = Analysis(['pyttsx3.drivers.espeak', 'wordblock_app.py'],
              pathex=['/home/commander/project/python/wordBlock'],
              binaries=[],
              datas=[],
-             hiddenimports=[],
+             hiddenimports=['pyttsx3.drivers,'],
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -21,7 +21,7 @@ exe = EXE(pyz,
           a.scripts,
           [],
           exclude_binaries=True,
-          name='wordblock',
+          name='pyttsx3.drivers',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -34,4 +34,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='wordblock')
+               name='pyttsx3.drivers')

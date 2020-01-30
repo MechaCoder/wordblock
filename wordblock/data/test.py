@@ -7,7 +7,8 @@ from .words import Word
 from .prefences import Prefences
 from .wordUseage import WordUseage
 
-def _makeRandomString(self, strLength:int = 10):
+
+def _makeRandomString(self, strLength: int = 10):
 
     returnStr = ''
     for x in range(strLength):
@@ -15,6 +16,7 @@ def _makeRandomString(self, strLength:int = 10):
         returnStr += chariter
 
     return returnStr
+
 
 class Test_DatabaseBase(TestCase):
 
@@ -41,6 +43,7 @@ class Test_DatabaseBase(TestCase):
             DatabaseBase(self.fileLoc).removeById([])
         )
 
+
 class Test_Word(TestCase):
 
     def setUp(self):
@@ -61,29 +64,31 @@ class Test_Word(TestCase):
                 int
             )
 
+
 class Test_Prefences(TestCase):
 
-        def setUp(self):
-            self.fileLoc = './ds.test.json'
-            return super().setUp()
+    def setUp(self):
+        self.fileLoc = './ds.test.json'
+        return super().setUp()
 
-        def test_set(self):
+    def test_set(self):
 
-            obj = Prefences(self.fileLoc).set('testPref', str(randint(0, 5000)))
+        obj = Prefences(self.fileLoc).set('testPref', str(randint(0, 5000)))
 
-            self.assertIsInstance(
-                obj,
-                bool
-            )
+        self.assertIsInstance(
+            obj,
+            bool
+        )
 
-            self.assertTrue(
-                obj
-            )
+        self.assertTrue(
+            obj
+        )
 
-        def test_get(self):
+    def test_get(self):
 
-            obj = Prefences(self.fileLoc).get('testPref')
-            self.assertIsInstance(obj, dict)
+        obj = Prefences(self.fileLoc).get('testPref')
+        self.assertIsInstance(obj, dict)
+
 
 class Test_WordUseage(TestCase):
 
@@ -92,7 +97,7 @@ class Test_WordUseage(TestCase):
         return super().setUp()
 
     def test_insert(self):
-    
+
         obj = WordUseage(self.fileLoc)
 
         for i in range(50):
@@ -118,4 +123,3 @@ class Test_WordUseage(TestCase):
                 k,
                 int
             )
-

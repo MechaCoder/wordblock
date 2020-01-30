@@ -22,7 +22,7 @@ class DatabaseBase:
     def __outputRow__(self, doc: Document):
         """ returns a dict of the id and all the keys within the document """
 
-        if doc == None:
+        if doc is None:
             raise DatabaseException(
                 'No row has been found'
             )

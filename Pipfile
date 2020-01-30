@@ -15,11 +15,20 @@ python-levenshtein = "*"
 pyttsx3 = "*"
 pyinstaller = "*"
 flake8 = "*"
+autopep8 = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
-pep8 = "flake8 ./*/*.py"
-run = "python ./wordblock.py"
+styleCheck = "flake8 ./*/*.py"
+autostyle = "autopep8 --in-place --aggressive --aggressive"
+run = "python ./wordblock_app.py"
 test = "python ./tests.py"
+build = "pyinstaller ./wordblock_app.spec"
+
+coverreport = "coverage report -i -m --include='./wordblock_app.py,./wordblock/*'"
+coverrun = "coverage run ./wordblock_app.py"
+
+cover_test = "coverage run ./tests.py"
