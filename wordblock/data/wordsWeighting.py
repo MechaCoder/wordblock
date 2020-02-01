@@ -22,7 +22,17 @@ class WordWeighting(DatabaseBase):
         tdb = TinyDB(self.file)
         tbl = tdb.table(self.table)
 
-        row = tbl.get(Query().tag == tag)
+        row = tbl.get(Query().word_id == tag)
         tdb.close()
 
         return self.__outputRow__(row)
+
+    def wightingExists(self, tag: str):
+    
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        existing = tbl.contains(Query().word_id == tag)
+        tdb.close()
+
+        return existing
