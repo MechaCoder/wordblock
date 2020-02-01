@@ -48,3 +48,11 @@ def isURLValid(url: str):
     if re.match(regex, url) is not None:
         return True
     return False
+
+
+def isInt(var): 
+    try:
+        int(var)
+        return True
+    except:
+        return False

@@ -14,6 +14,7 @@ from .data import WordUseage
 from .data import WordWeighting
 from .utils import importer
 from .utils import isURLValid
+from .utils import isInt
 from .ui.popUp import popUp
 
 
@@ -199,5 +200,7 @@ class WordsListLayout(GridLayout):
         self.buildList()
 
     def changeWeighting(self, inst, value):
+        if isInt(value) is False:
+            return None
+            
         WordWeighting().set(inst.wordId, value)
-        pass
