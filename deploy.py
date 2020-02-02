@@ -1,8 +1,3 @@
-# Todo;
-# 1) get the most recent tag
-# 2) get the most recent branch
-# 3) make a FileName
-# 4) compress a build/
 from git import Repo
 from shutil import make_archive, copyfile
 from requests import post
