@@ -11,9 +11,13 @@ from kivy.uix.popup import Popup
 
 from .data import Word
 from .data import WordUseage
-from .utils import importer
+from .data import WordWeighting
+from .utils import importer, async_importer
 from .utils import isURLValid
+from .utils import isInt
 from .ui.popUp import popUp
+
+import asyncio
 
 
 class UrlLayout(GridLayout):
@@ -48,7 +52,9 @@ class UrlLayout(GridLayout):
         self.urlText.disabled = True
         self.importBtn.disabled = True
 
-        importer(self.urlText.text)
+        asyncio.run(
+            async_importer(self.urlText.text)
+        )
 
         self.urlText.disabled = False
         self.importBtn.disabled = False
@@ -62,7 +68,6 @@ class AddSingle(GridLayout):
         self.cols = 2
         stuffHeight = 25
 
-        # self.add_widget(Label(text='Add single'))
         self.txtBox = TextInput(
             text='',
             multiline=False,
@@ -124,9 +129,31 @@ class WordsListLayout(GridLayout):
             countValue = 0
             if word['id'] in obj.keys():
                 countValue = obj[word['id']]
+            t = 0
+            if WordWeighting().wightingExists(word['id']):
+                t = WordWeighting().get(word['id'])['value_id']
+
+            textbox = TextInput(
+                text=str(t),
+                size_hint_y=None,
+                height=40,
+                size_hint_x=None,
+                width=30,
+                multiline=False
+            )
+
+            textbox.wordId = word['id']
+
+            textbox.bind(
+                text=self.changeWeighting
+            )
 
             row.add_widget(
                 Label(text=str(countValue), size_hint_y=None, height=40)
+            )
+
+            row.add_widget(
+                textbox
             )
 
             btn = Button(
@@ -174,3 +201,9 @@ class WordsListLayout(GridLayout):
         Word().removeById(rowId)
         self.popup.dismiss()
         self.buildList()
+
+    def changeWeighting(self, inst, value):
+        if isInt(value) is False:
+            return None
+
+        WordWeighting().set(inst.wordId, value)

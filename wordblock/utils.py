@@ -1,5 +1,6 @@
 from urllib.request import urlopen
 import re
+import asyncio
 
 from bs4 import BeautifulSoup
 
@@ -34,6 +35,10 @@ def importer(url: str, wordSize: int = 5):
     return True
 
 
+async def async_importer(url: str, wordSize: int = 5):
+    return importer(url, wordSize)
+
+
 def isURLValid(url: str):
     """ checks that a passed a URL is a vaild (not malformed) """
 
@@ -48,3 +53,11 @@ def isURLValid(url: str):
     if re.match(regex, url) is not None:
         return True
     return False
+
+
+def isInt(var):
+    try:
+        int(var)
+        return True
+    except BaseException:
+        return False
