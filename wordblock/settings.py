@@ -12,10 +12,12 @@ from kivy.uix.popup import Popup
 from .data import Word
 from .data import WordUseage
 from .data import WordWeighting
-from .utils import importer
+from .utils import importer, async_importer
 from .utils import isURLValid
 from .utils import isInt
 from .ui.popUp import popUp
+
+import asyncio
 
 
 class UrlLayout(GridLayout):
@@ -50,7 +52,9 @@ class UrlLayout(GridLayout):
         self.urlText.disabled = True
         self.importBtn.disabled = True
 
-        importer(self.urlText.text)
+        asyncio.run(
+            async_importer(self.urlText.text)
+        )
 
         self.urlText.disabled = False
         self.importBtn.disabled = False
@@ -128,11 +132,10 @@ class WordsListLayout(GridLayout):
             t = 0
             if WordWeighting().wightingExists(word['id']):
                 t = WordWeighting().get(word['id'])['value_id']
-                
 
             textbox = TextInput(
-                text=str(t), 
-                size_hint_y=None, 
+                text=str(t),
+                size_hint_y=None,
                 height=40,
                 size_hint_x=None,
                 width=30,
@@ -202,5 +205,5 @@ class WordsListLayout(GridLayout):
     def changeWeighting(self, inst, value):
         if isInt(value) is False:
             return None
-            
+
         WordWeighting().set(inst.wordId, value)
