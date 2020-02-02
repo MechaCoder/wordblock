@@ -20,7 +20,10 @@ class Deploy:
 
     def getCurrentBranchName(self):
         """gets the active Branch"""
-        return str(self.repo.active_branch)[8:]
+        base = str(self.repo.active_branch)[8:]
+        if base != "":
+            return str(self.repo.active_branch)[8:]
+        return str(self.repo.active_branch)
 
     def mkFileName(self):
         """ builds out the file name of the archive file """
