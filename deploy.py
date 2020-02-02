@@ -1,20 +1,21 @@
 # Todo;
 # 1) get the most recent tag
 # 2) get the most recent branch
-# 3) make a FileName 
-# 4) compress a build/ 
+# 3) make a FileName
+# 4) compress a build/
 from git import Repo
 from shutil import make_archive, copyfile
 from requests import post
 from json import loads
 
+
 class Deploy:
 
     def __init__(self):
         self.repo = Repo('./')
-    
+
     def getMostRecentTag(self):
-        return str(self.repo.tags[0]).replace('.','')
+        return str(self.repo.tags[0]).replace('.', '')
 
     def getMostRecentCommitHash(self):
         return str(self.repo.refs[0].commit.hexsha)[-15:]
@@ -31,11 +32,11 @@ class Deploy:
     def cpReadmeToBuild(self):
         return copyfile('./readme.md', './build/readme.md')
 
-    def compress(self, fileName:str):
+    def compress(self, fileName: str):
         zipFileAddr = make_archive(f'./{fileName}', 'zip', './build/')
         return zipFileAddr
 
-    def postFileToBitbucket(self, filePath:str):
+    def postFileToBitbucket(self, filePath: str):
 
         jsonFileObj = open('./devKeys.json')
         json = loads(jsonFileObj.read())
@@ -52,11 +53,10 @@ class Deploy:
 
         return req.status_code
 
-
     def main(self):
         self.cpReadmeToBuild()
         filename = self.mkFileName()
-        pathname =  self.compress(filename)
+        pathname = self.compress(filename)
         rObj = {
             'path': pathname,
             'sentToBb': False
