@@ -23,6 +23,12 @@ WordBlock is an app that works is a very similar way, another property app word 
 * added a more intellgent window width
 * bug fixs and improvesments
 
+### v1.4
+
+* You can know edit the weighting of words enableing you to custom which words come up first.
+* the importer for webpages has now been changed to be asyncs.
+* A new deploy script to automate the release cycle.
+
 ## Code style
 
 useing standard `flake8`
