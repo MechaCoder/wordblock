@@ -6,3 +6,4 @@ ds.test.json
 .coverage
 *.cpython-37.pyc
 *.zip
+devKeys.json

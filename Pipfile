@@ -18,6 +18,7 @@ flake8 = "*"
 autopep8 = "*"
 coverage = "*"
 gitpython = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

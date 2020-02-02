@@ -2,9 +2,11 @@
 # 1) get the most recent tag
 # 2) get the most recent branch
 # 3) make a FileName 
-# 4) compress a build/
+# 4) compress a build/ 
 from git import Repo
 from shutil import make_archive, copyfile
+from requests import post
+from json import loads
 
 class Deploy:
 
@@ -33,12 +35,42 @@ class Deploy:
         zipFileAddr = make_archive(f'./{fileName}', 'zip', './build/')
         return zipFileAddr
 
+    def postFileToBitbucket(self, filePath:str):
+
+        jsonFileObj = open('./devKeys.json')
+        json = loads(jsonFileObj.read())
+        jsonFileObj.close()
+
+        BB_AUTH_STRING = json['BB_AUTH_STRING']
+        BITBUCKET_REPO_OWNER = json['BITBUCKET_REPO_OWNER']
+        BITBUCKET_REPO_SLUG = json['BITBUCKET_REPO_SLUG']
+
+        fileObj = {'files': open(f'{filePath}', 'rb')}
+        url = f'https://{BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/{BITBUCKET_REPO_OWNER}/{BITBUCKET_REPO_SLUG}/downloads'
+        req = post(url, files=fileObj)
+        fileObj['files'].close()
+
+        return req.status_code
+
+
     def main(self):
         self.cpReadmeToBuild()
         filename = self.mkFileName()
-        return self.compress(filename)
+        pathname =  self.compress(filename)
+        rObj = {
+            'path': pathname,
+            'sentToBb': False
+
+        }
+        if self.postFileToBitbucket(pathname) is 200:
+            rObj['sentToBb'] = True
+
+        return rObj
+
 
 if __name__ == '__main__':
     x = Deploy().main()
     print('A Deployment .zip has been created;')
-    print(f'---- {x}')
+    print(f'>>> {rObj["path"]}')
+    if rObj['sentToBb']:
+        print('Deployment has been sent Bitbucket')
