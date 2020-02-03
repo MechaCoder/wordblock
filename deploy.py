@@ -20,25 +20,23 @@ class Deploy:
 
     def getCurrentBranchName(self):
         """gets the active Branch"""
-        base = str(self.repo.active_branch)[8:]
-        if base != "":
-            return str(self.repo.active_branch)[8:]
-        return str(self.repo.active_branch)
+        base = str(self.repo.active_branch).split('/')[-1]
+        return base
 
     def mkFileName(self):
         """ builds out the file name of the archive file """
         release = self.getMostRecentTag()
         branch = self.getCurrentBranchName()
         sha_msg = self.getMostRecentCommitHash()
-        return f'wordblock_{release}_{branch}_{sha_msg}'
+        return f'wordblock_{branch}'
 
     def cpReadmeToBuild(self):
         """ copy across `readme.md` read me file"""
-        return copyfile('./readme.md', './build/readme.md')
+        return copyfile('./readme.md', './dist/readme.md')
 
     def compress(self, fileName: str):
         """ makes the archive file returns the absute path to the new archive"""
-        zipFileAddr = make_archive(f'./{fileName}', 'zip', './build/')
+        zipFileAddr = make_archive(f'./{fileName}', 'zip', './dist/')
         return zipFileAddr
 
     def postFileToBitbucket(self, filePath: str):
