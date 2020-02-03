@@ -32,7 +32,7 @@ class Deploy:
 
     def cpReadmeToBuild(self):
         """ copy across `readme.md` read me file"""
-        return copyfile('./readme.md', './build/readme.md')
+        return copyfile('./readme.md', './dist/readme.md')
 
     def compress(self, fileName: str):
         """ makes the archive file returns the absute path to the new archive"""
