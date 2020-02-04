@@ -1,4 +1,4 @@
-from .base import DatabaseBase, DatabaseException, TinyDB, Query, time_ns
+from .base import DatabaseBase, DatabaseException, TinyDB, Query, time_ns, DatabaseObject
 
 
 class WordWeighting(DatabaseBase):
@@ -8,31 +8,31 @@ class WordWeighting(DatabaseBase):
 
     def set(self, wordId: int, valueId: int):
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         rows = tbl.upsert({
             'word_id': wordId,
             'value_id': valueId
         }, Query().word_id == wordId)
-        tdb.close()
+        tdb.tdb.close()
         return rows
 
     def get(self, tag: str):
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         row = tbl.get(Query().word_id == tag)
-        tdb.close()
+        tdb.tdb.close()
 
         return self.__outputRow__(row)
 
     def wightingExists(self, tag: str):
     
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         existing = tbl.contains(Query().word_id == tag)
-        tdb.close()
+        tdb.tdb.close()
 
         return existing

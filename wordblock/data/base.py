@@ -4,14 +4,16 @@ from time import time_ns  # noqa: F401
 from tinydb import TinyDB
 from tinydb import Query  # noqa: F401
 from tinydb.database import Document
+from tinydb.storages import JSONStorage
+from tinydb.middlewares import CachingMiddleware
 
 
 class DatabaseObject:
 
     def __init__(self, fileLocation: str, tableName: str = '_default'):
         super().__init__()
-        self.tdb = TinyDB(fileLocation)
-        self.tbl = self.tdb.table(tableName)
+        self.tdb = TinyDB(fileLocation, storage=CachingMiddleware(JSONStorage))
+        self.tbl = self.tdb.table(tableName, cache_size=30)
 
 class DatabaseException(Exception):
     pass
