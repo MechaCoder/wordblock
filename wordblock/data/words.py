@@ -1,4 +1,4 @@
-from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters
+from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters, DatabaseObject
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from fuzzywuzzy import process
@@ -68,8 +68,8 @@ class Word(DatabaseBase):
 
         word = word.lower()
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         if tbl.contains(Query().word == word.lower()):
             raise Warning(f'{word} already exists')
@@ -79,13 +79,13 @@ class Word(DatabaseBase):
             'time': time_ns()
         })
 
-        tdb.close()
+        tdb.tdb.close()
         return rowId
 
     def insert_muiple(self, wordsList:list):
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         convertedList = []
         for word in wordsList:
@@ -146,8 +146,8 @@ class Word(DatabaseBase):
         return self.removeById(idsList)
 
     def getRowByWord(self, word: str):
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         row = tbl.get(Query().word == word)
 
