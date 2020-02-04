@@ -19,6 +19,7 @@ autopep8 = "*"
 coverage = "*"
 gitpython = "*"
 requests = "*"
+ujson = "*"
 
 [requires]
 python_version = "3.7"
@@ -32,5 +33,4 @@ build = "pyinstaller --onefile --hidden-import pyttsx3.drivers --hidden-import p
 coverreport = "coverage report -i -m --include='./wordblock_app.py,./wordblock/*'"
 coverrun = "coverage run ./wordblock_app.py"
 cover_test = "coverage run ./tests.py"
-
 deploy = "python deploy.py"
