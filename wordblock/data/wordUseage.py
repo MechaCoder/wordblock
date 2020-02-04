@@ -1,5 +1,5 @@
 from time import time_ns
-from .base import DatabaseBase, TinyDB
+from .base import DatabaseBase, TinyDB, DatabaseObject
 
 
 class WordUseage(DatabaseBase):
@@ -9,15 +9,15 @@ class WordUseage(DatabaseBase):
 
     def insert(self, wordId: int):
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         rid = tbl.insert({
             'wordId': wordId,
             'timeStamp': time_ns()
         })
 
-        tdb.close()
+        tdb.tdb.close()
         return rid
 
     def getCounts(self):
