@@ -82,6 +82,33 @@ class Word(DatabaseBase):
         tdb.close()
         return rowId
 
+    def insert_muiple(self, wordsList:list):
+
+        tdb = TinyDB(self.file)
+        tbl = tdb.table(self.table)
+
+        convertedList = []
+        for word in wordsList:
+            word = word.lower()
+            
+            if isinstance(word, str) == False:
+                continue
+
+            if tbl.contains(Query().word == word.lower()):
+                continue
+
+            d = {
+                'word': word.lower(),
+                'time': time_ns()
+            }
+            convertedList.append(d)
+        print(len(convertedList))
+        rowids = tbl.insert_multiple(convertedList)
+
+        tdb.close()
+        return rowids
+        
+
     def readAllAsList(self):
         """ returns a list of all words with in the system """
 
