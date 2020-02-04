@@ -102,7 +102,6 @@ class Word(DatabaseBase):
                 'time': time_ns()
             }
             convertedList.append(d)
-        print(len(convertedList))
         rowids = tbl.insert_multiple(convertedList)
 
         tdb.close()
