@@ -33,7 +33,7 @@ def importer(url: str, wordSize: int = 5):
 
             wordList.append(word)
     wordObj.insert_muiple(wordList)
-    popUp('url import has finished')
+    popUp('url import has finished', False)
     return True
 
 
