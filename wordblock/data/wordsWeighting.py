@@ -1,4 +1,4 @@
-from .base import DatabaseBase, DatabaseException, TinyDB, Query, time_ns
+from .base import DatabaseBase, DatabaseException, TinyDB, Query, time_ns, DatabaseObject
 
 
 class WordWeighting(DatabaseBase):

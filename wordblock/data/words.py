@@ -151,5 +151,5 @@ class Word(DatabaseBase):
 
         row = tbl.get(Query().word == word)
 
-        tdb.close()
+        tdb.tdb.close()
         return self.__outputRow__(row)
