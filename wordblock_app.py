@@ -11,7 +11,7 @@ from kivy.uix.scrollview import ScrollView
 
 from wordblock.data import Word, Prefences, WordUseage, getCountPannel
 from wordblock.speaker import speak
-from wordblock.settings import WordsListLayout, UrlLayout, AddSingle
+from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayoutEdit
 from wordblock.prefences import PrefencesGui
 from clipPad import Clipper
 
@@ -153,23 +153,15 @@ class SettingsScreen(Screen):
         )
 
         self.toolbar = PannelToolBar()
+        self.toolbar.size_hint_y = None
+        self.toolbar.height = 30
         self.box.add_widget(self.toolbar)
 
         self.addBtnSingle = AddSingle()
         self.box.add_widget(self.addBtnSingle)
 
-        self.wordLists = WordsListLayout(spacing=0, size_hint_y=None)
-        self.wordLists.bind(
-            minimum_height=self.wordLists.setter('height')
-        )
-
-        self.scroll = ScrollView(
-            size_hint=(1, None),
-            size=(Window.width, 225)
-        )
-
-        self.scroll.add_widget(self.wordLists)
-        self.box.add_widget(self.scroll)
+        self.sBox = SearchLayoutEdit()
+        self.box.add_widget(self.sBox)
 
         self.add_widget(self.box)
 

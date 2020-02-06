@@ -119,7 +119,7 @@ class Word(DatabaseBase):
 
         return rows
 
-    def readFindString(self, qStr: str = ''):
+    def readFindString(self, qStr: str = '', rows: bool = False):
         if qStr == '':
             return self.readAllAsList()[0:72]
 
