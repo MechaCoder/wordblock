@@ -76,7 +76,7 @@ class AddSingle(GridLayout):
             multiline=False,
             size_hint_y=None,
             height=stuffHeight)
-        
+
         self.btn = Button(
             text='Input Word',
             on_press=self.onBtnClick,
@@ -121,9 +121,8 @@ class WordsListLayout(GridLayout):
         wordsObj = Word()
 
         obj = WordUseage().getCounts()
-        words = wordsObj.readFindString(self.qString)
-        words.sort()
-        
+        words = sorted(wordsObj.readFindString(self.qString))
+
         for wordTemp in words:
 
             word = wordsObj.getRowByWord(wordTemp)
@@ -232,9 +231,9 @@ class SearchLayoutEdit(GridLayout):
         self.add_widget(self.textBox)
 
         self.rowList = WordsListLayout(
-            spacing=0, 
-            size_hint_y=None, 
-            qStr = self.textBox.text,
+            spacing=0,
+            size_hint_y=None,
+            qStr=self.textBox.text,
         )
 
         self.rowList.bind(
