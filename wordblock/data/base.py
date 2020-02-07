@@ -4,7 +4,16 @@ from time import time_ns  # noqa: F401
 from tinydb import TinyDB
 from tinydb import Query  # noqa: F401
 from tinydb.database import Document
+from tinydb.storages import JSONStorage
+from tinydb.middlewares import CachingMiddleware
 
+
+class DatabaseObject:
+
+    def __init__(self, fileLocation: str, tableName: str = '_default'):
+        super().__init__()
+        self.tdb = TinyDB(fileLocation, storage=CachingMiddleware(JSONStorage))
+        self.tbl = self.tdb.table(tableName, cache_size=30)
 
 class DatabaseException(Exception):
     pass
@@ -52,11 +61,10 @@ class DatabaseBase:
     def all(self):
         """ provides a list of dicts of all document in the table"""
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
 
-        rows = tbl.all()
-        tdb.close()
+        rows = tdb.tbl.all()
+        tdb.tdb.close()
 
         return self.__outputRows__(rows)
 
@@ -66,11 +74,10 @@ class DatabaseBase:
         if isinstance(docId, int) is False:
             raise DatabaseException('docIds must be a int')
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
 
-        row = tbl.get(doc_id=docId)
-        tdb.close()
+        row = tdb.tbl.get(doc_id=docId)
+        tdb.tdb.close()
 
         return self.__outputRow__(row)
 
@@ -80,12 +87,11 @@ class DatabaseBase:
             if isinstance(ident, int) is False:
                 raise DatabaseException('all ids must be a string')
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
 
-        tbl.remove(
+        tdb.tbl.remove(
             doc_ids=docIds
         )
 
-        tdb.close()
+        tdb.tdb.close()
         return True

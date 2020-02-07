@@ -1,4 +1,4 @@
-from .base import DatabaseBase, DatabaseException
+from .base import DatabaseBase, DatabaseException, DatabaseObject
 from string import ascii_letters  # noqa: F401
 from time import time_ns  # noqa: F401
 
@@ -20,33 +20,33 @@ class Prefences(DatabaseBase):
 
     def set(self, tag: str, value):
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         rows = tbl.upsert({
             'tag': tag,
             'val': value
         }, Query().tag == tag)
 
-        tdb.close()
+        tdb.tdb.close()
 
         return True
 
     def get(self, tag: str):
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         row = tbl.get(Query().tag == tag)
-        tdb.close()
+        tdb.tdb.close()
 
         return self.__outputRow__(row)
 
     def settingExists(self, tag: str):
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         existing = tbl.contains(Query().tag == tag)
-        tdb.close()
+        tdb.tdb.close()
 
         return existing

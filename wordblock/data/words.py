@@ -1,4 +1,4 @@
-from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters
+from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters, DatabaseObject
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from fuzzywuzzy import process
@@ -68,8 +68,8 @@ class Word(DatabaseBase):
 
         word = word.lower()
 
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         if tbl.contains(Query().word == word.lower()):
             raise Warning(f'{word} already exists')
@@ -79,8 +79,34 @@ class Word(DatabaseBase):
             'time': time_ns()
         })
 
-        tdb.close()
+        tdb.tdb.close()
         return rowId
+
+    def insert_muiple(self, wordsList:list):
+
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
+
+        convertedList = []
+        for word in wordsList:
+            word = word.lower()
+            
+            if isinstance(word, str) == False:
+                continue
+
+            if tbl.contains(Query().word == word.lower()):
+                continue
+
+            d = {
+                'word': word.lower(),
+                'time': time_ns()
+            }
+            convertedList.append(d)
+        rowids = tbl.insert_multiple(convertedList)
+
+        tdb.close()
+        return rowids
+        
 
     def readAllAsList(self):
         """ returns a list of all words with in the system """
@@ -93,7 +119,7 @@ class Word(DatabaseBase):
 
         return rows
 
-    def readFindString(self, qStr: str = ''):
+    def readFindString(self, qStr: str = '', rows: bool = False):
         if qStr == '':
             return self.readAllAsList()[0:72]
 
@@ -120,10 +146,10 @@ class Word(DatabaseBase):
         return self.removeById(idsList)
 
     def getRowByWord(self, word: str):
-        tdb = TinyDB(self.file)
-        tbl = tdb.table(self.table)
+        tdb = DatabaseObject(self.file, self.table)
+        tbl = tdb.tbl
 
         row = tbl.get(Query().word == word)
 
-        tdb.close()
+        tdb.tdb.close()
         return self.__outputRow__(row)

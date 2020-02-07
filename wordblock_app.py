@@ -8,10 +8,13 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.clock import Clock
 
 from wordblock.data import Word, Prefences, WordUseage, getCountPannel
 from wordblock.speaker import speak
-from wordblock.settings import WordsListLayout, UrlLayout, AddSingle
+from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayoutEdit
 from wordblock.prefences import PrefencesGui
 from clipPad import Clipper
 
@@ -23,6 +26,8 @@ Builder.load_string("""
     name: '_settings_'
 <PrefencesScreen>
     name: '_prefences_'
+<SplahScreen>
+    name: '_splash_'
 """)
 
 
@@ -153,23 +158,15 @@ class SettingsScreen(Screen):
         )
 
         self.toolbar = PannelToolBar()
+        self.toolbar.size_hint_y = None
+        self.toolbar.height = 30
         self.box.add_widget(self.toolbar)
 
         self.addBtnSingle = AddSingle()
         self.box.add_widget(self.addBtnSingle)
 
-        self.wordLists = WordsListLayout(spacing=0, size_hint_y=None)
-        self.wordLists.bind(
-            minimum_height=self.wordLists.setter('height')
-        )
-
-        self.scroll = ScrollView(
-            size_hint=(1, None),
-            size=(Window.width, 225)
-        )
-
-        self.scroll.add_widget(self.wordLists)
-        self.box.add_widget(self.scroll)
+        self.sBox = SearchLayoutEdit()
+        self.box.add_widget(self.sBox)
 
         self.add_widget(self.box)
 
@@ -185,11 +182,27 @@ class PrefencesScreen(Screen):
         self.pannelToolBar.height = 30
         self.box.add_widget(self.pannelToolBar)
         self.box.add_widget(PrefencesGui())
-
         self.add_widget(self.box)
 
 
+class SplahScreen(Screen):
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.box = BoxLayout(orientation='vertical', spacing=5)
+        self.box.add_widget(Image(source='assets/logo.png'))
+        self.add_widget(self.box)
+
+        self.clockEvent = Clock.schedule_once(self.changeToApp, 30)
+
+    def changeToApp(self, b):
+        sm.current = '_word_block_'
+        Clock.unschedule(self.clockEvent)
+
+
 sm = ScreenManager()
+sm.add_widget(SplahScreen())
 sm.add_widget(WordBlockScreen())
 sm.add_widget(SettingsScreen())
 sm.add_widget(PrefencesScreen())
@@ -198,8 +211,8 @@ sm.add_widget(PrefencesScreen())
 class MainApp(App):
 
     def build(self):
-        self.title = "Word Block"
-        sm.current = '_word_block_'
+        self.title = "WordBlock"
+        sm.current = '_splash_'
         return sm
 
 

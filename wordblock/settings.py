@@ -8,6 +8,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.scrollview import ScrollView
 
 from .data import Word
 from .data import WordUseage
@@ -67,12 +68,15 @@ class AddSingle(GridLayout):
 
         self.cols = 2
         stuffHeight = 25
+        self.size_hint_y = None
+        self.height = 25
 
         self.txtBox = TextInput(
             text='',
             multiline=False,
             size_hint_y=None,
             height=stuffHeight)
+
         self.btn = Button(
             text='Input Word',
             on_press=self.onBtnClick,
@@ -103,20 +107,25 @@ class AddSingle(GridLayout):
 
 class WordsListLayout(GridLayout):
 
-    def __init__(self, **kwargs):
+    def __init__(self, qStr: str = '', **kwargs):
         super().__init__(**kwargs)
 
         self.cols = 4
+        self.qString = qStr
         self.buildList()
 
     def buildList(self, b=None):
 
         self.clear_widgets()
 
-        obj = WordUseage().getCounts()
+        wordsObj = Word()
 
-        wordsList = sorted(Word().all(), key=lambda i: i['word'])
-        for word in wordsList:
+        obj = WordUseage().getCounts()
+        words = sorted(wordsObj.readFindString(self.qString))
+
+        for wordTemp in words:
+
+            word = wordsObj.getRowByWord(wordTemp)
             row = GridLayout()
             row.rows = 1
             row.height = 40
@@ -207,3 +216,37 @@ class WordsListLayout(GridLayout):
             return None
 
         WordWeighting().set(inst.wordId, value)
+
+
+class SearchLayoutEdit(GridLayout):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.cols = 1
+        stuffHeight = 30
+        self.textBox = TextInput(text='', size_hint_y=None, height=stuffHeight)
+
+        self.textBox.bind(text=self.changeShearchEvent)
+        self.add_widget(self.textBox)
+
+        self.rowList = WordsListLayout(
+            spacing=0,
+            size_hint_y=None,
+            qStr=self.textBox.text,
+        )
+
+        self.rowList.bind(
+            minimum_height=self.rowList.setter('height')
+        )
+
+        self.scrollPannel = ScrollView(
+            size_hint=(1, None),
+            size=(Window.width, 200),
+        )
+        self.scrollPannel.add_widget(self.rowList)
+        self.add_widget(self.scrollPannel)
+
+    def changeShearchEvent(self, inst, value):
+        self.rowList.qString = self.textBox.text
+        self.rowList.buildList()

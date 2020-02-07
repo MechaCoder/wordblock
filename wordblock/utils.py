@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 
 from .data import Word
 from .data.words import vaildWords
+from .ui.popUp import popUp
 
 
 def importer(url: str, wordSize: int = 5):
@@ -14,6 +15,8 @@ def importer(url: str, wordSize: int = 5):
     httpObj = urlopen(url)
     html = httpObj.read().decode('utf8')
     httpObj.close()
+
+    wordObj = Word()
 
     wordList = []
     for tag in BeautifulSoup(html, 'html.parser').select('p'):
@@ -28,14 +31,14 @@ def importer(url: str, wordSize: int = 5):
             if vaildWords(word) is False:
                 continue
 
-            try:
-                Word().insert(word)
-            except Warning as err:
-                print(str(err))
+            wordList.append(word)
+    wordObj.insert_muiple(wordList)
+    popUp('url import has finished', False)
     return True
 
 
 async def async_importer(url: str, wordSize: int = 5):
+
     return importer(url, wordSize)
 
 
