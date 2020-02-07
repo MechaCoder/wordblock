@@ -8,6 +8,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.core.window import Window
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.label import Label
+from kivy.uix.image import Image
+from kivy.clock import Clock
 
 from wordblock.data import Word, Prefences, WordUseage, getCountPannel
 from wordblock.speaker import speak
@@ -23,6 +26,8 @@ Builder.load_string("""
     name: '_settings_'
 <PrefencesScreen>
     name: '_prefences_'
+<SplahScreen>
+    name: '_splash_'
 """)
 
 
@@ -181,17 +186,36 @@ class PrefencesScreen(Screen):
         self.add_widget(self.box)
 
 
+class SplahScreen(Screen):
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+
+        self.box = BoxLayout(orientation='vertical', spacing=5)
+        self.box.add_widget(Image(source='assets/logo.png'))
+        self.add_widget(self.box)
+
+        self.clockEvent = Clock.schedule_once(self.changeToApp, 30)
+    
+    def changeToApp(self, b):
+        sm.current = '_word_block_'
+        Clock.unschedule(self.clockEvent)
+
+
+
 sm = ScreenManager()
+sm.add_widget(SplahScreen())
 sm.add_widget(WordBlockScreen())
 sm.add_widget(SettingsScreen())
 sm.add_widget(PrefencesScreen())
 
 
+
 class MainApp(App):
 
     def build(self):
-        self.title = "Word Block"
-        sm.current = '_word_block_'
+        self.title = "WordBlock"
+        sm.current = '_splash_'
         return sm
 
 
