@@ -29,6 +29,13 @@ WordBlock is an app that works is a very similar way, another property app word 
 * the importer for webpages has now been changed to be asyncs.
 * A new deploy script to automate the release cycle.
 
+### v1.5
+
+* there was an error in the build projects that now this problem has be sorted.
+* a popUp to inform the use when the url import has finished
+* I have added a new shearch fuction to the edit menu that greatly improves the proformace of the Application.
+* Ad i have added a splah screen to improve the welcomeing experience.
+
 ## Code style
 
 useing standard `flake8`

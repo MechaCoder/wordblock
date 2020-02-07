@@ -182,7 +182,6 @@ class PrefencesScreen(Screen):
         self.pannelToolBar.height = 30
         self.box.add_widget(self.pannelToolBar)
         self.box.add_widget(PrefencesGui())
-
         self.add_widget(self.box)
 
 
@@ -196,11 +195,10 @@ class SplahScreen(Screen):
         self.add_widget(self.box)
 
         self.clockEvent = Clock.schedule_once(self.changeToApp, 30)
-    
+
     def changeToApp(self, b):
         sm.current = '_word_block_'
         Clock.unschedule(self.clockEvent)
-
 
 
 sm = ScreenManager()
@@ -208,7 +206,6 @@ sm.add_widget(SplahScreen())
 sm.add_widget(WordBlockScreen())
 sm.add_widget(SettingsScreen())
 sm.add_widget(PrefencesScreen())
-
 
 
 class MainApp(App):
