@@ -1,5 +1,9 @@
 # WordBlock
 
+## How to use Video
+
+[Here](https://www.youtube.com/watch?v=ojA9NkWCHSg)
+
 ## Motivation
 
 WordBlock is an app that works is a very similar way, another property app word bar, but this is built using completely different technology and meant to be more open and more 'hackable'.
@@ -57,4 +61,4 @@ if you useing the repo then the project's dependcy are useing pipenv, to run sim
 
 #### 2 - From installer
 
-you can also run `pipenv run build`. that will build the project, as an installer this means that you should be able to run the project as a single file. i recermend that you do this on the system you want use it on.
+you can also run `pipenv run build`. that will build the project, as an installer this means that you should be able to run the project as a single file. i recermend that you do this on the system you want use it on. 
