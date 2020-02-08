@@ -8,6 +8,11 @@
 
 WordBlock is an app that works is a very similar way, another property app word bar, but this is built using completely different technology and meant to be more open and more 'hackable'.
 
+### important links
+
+* [download page](https://bitbucket.org/MechaCoder/wordblock/downloads/)
+* [how to use video](https://www.youtube.com/watch?v=ojA9NkWCHSg)
+
 ## Build status
 
 ### V1.2
@@ -61,4 +66,4 @@ if you useing the repo then the project's dependcy are useing pipenv, to run sim
 
 #### 2 - From installer
 
-you can also run `pipenv run build`. that will build the project, as an installer this means that you should be able to run the project as a single file. i recermend that you do this on the system you want use it on. 
+you can also run `pipenv run build`. that will build the project, as an installer this means that you should be able to run the project as a single file. i recermend that you do this on the system you want use it on. for linux users you can download app for the download them [here](https://bitbucket.org/MechaCoder/wordblock/downloads/).
