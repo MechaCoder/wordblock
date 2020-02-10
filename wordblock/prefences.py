@@ -3,6 +3,7 @@ from kivy.uix.switch import Switch
 from kivy.uix.gridlayout import GridLayout
 
 from .settings import UrlLayout
+from .share import ShareBox
 
 from .data import Prefences
 
@@ -33,6 +34,11 @@ class PrefencesGui(GridLayout):
 
         self.urlLayout = UrlLayout()
         self.add_widget(self.urlLayout)
+
+        self.add_widget(
+            Label(text='import and export btn')
+        )
+        self.add_widget(ShareBox())
 
     def callback(self, inst, value):
         self.pref.set('speak', value)

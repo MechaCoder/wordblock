@@ -16,6 +16,7 @@ from wordblock.data import Word, Prefences, WordUseage, getCountPannel
 from wordblock.speaker import speak
 from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayoutEdit
 from wordblock.prefences import PrefencesGui
+from wordblock.share import ShareBox
 from clipPad import Clipper
 
 
@@ -180,9 +181,12 @@ class PrefencesScreen(Screen):
         self.pannelToolBar = PannelToolBar()
         self.pannelToolBar.size_hint_y = None
         self.pannelToolBar.height = 30
+        
         self.box.add_widget(self.pannelToolBar)
         self.box.add_widget(PrefencesGui())
+
         self.add_widget(self.box)
+
 
 
 class SplahScreen(Screen):
