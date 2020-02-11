@@ -15,7 +15,8 @@ class Share:
                 wordRow['word']
             )
         dictList = {"words": words, "unixTimeStamp": str(time_ns())}
-        return JsonFiles(filename).write(dictList)
+        JsonFiles(filename).write(dictList)
+        return filename
 
     def readWordsToDB(self, filePath):
         fileContent = JsonFiles(filePath).read()
