@@ -36,7 +36,6 @@ class ShareBox(GridLayout):
 
     def snapshotEvent(self, inst):
         filename = Share().mkFile()
-        print('file made')
         popUp(f'all words have been imported {filename}')
 
     def loadEvent(self, inst):
