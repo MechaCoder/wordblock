@@ -2,8 +2,10 @@ from time import time_ns
 from .files import JsonFiles, mkFileName
 from wordblock.data import Word
 
+
 class ShareFileMalformed(Exception):
     pass
+
 
 class Share:
 
@@ -20,7 +22,7 @@ class Share:
 
     def readWordsToDB(self, filePath):
         fileContent = JsonFiles(filePath).read()
-        
+
         if 'words' not in fileContent.keys():
             raise ShareFileMalformed('no word list found in file')
 
