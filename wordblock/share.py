@@ -36,7 +36,7 @@ class ShareBox(GridLayout):
 
     def on_entry_added(self, entry, parent):
         print('on_entry_added')
-    
+
     def on_subentry_to_entry(self, entry, parent):
         print('on_subentry_to_entry')
 
@@ -68,7 +68,6 @@ class ShareBox(GridLayout):
 
         self.popup.content = box
         self.popup.open()
-        
 
     def on_selectEvent(self, sel, touch):
         """ The event that is triggered when a file is selecting in the filediolog
