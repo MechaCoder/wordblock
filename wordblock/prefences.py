@@ -36,7 +36,7 @@ class PrefencesGui(GridLayout):
         self.add_widget(self.urlLayout)
 
         self.add_widget(
-            Label(text='import and export btn')
+            Label(text='export files in inport files')
         )
         self.add_widget(ShareBox())
 

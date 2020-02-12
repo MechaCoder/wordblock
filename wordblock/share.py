@@ -11,7 +11,7 @@ class ShareFileLoad(FileChooserIconView):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.path = './'
-        self.filters = '[words-*.words.json]'
+        self.filters = ['words-*.words.json']
 
 
 class ShareBox(GridLayout):
@@ -34,9 +34,15 @@ class ShareBox(GridLayout):
         self.add_widget(self.snapShot)
         self.add_widget(self.loadBtn)
 
+    def on_entry_added(self, entry, parent):
+        print('on_entry_added')
+    
+    def on_subentry_to_entry(self, entry, parent):
+        print('on_subentry_to_entry')
+
     def snapshotEvent(self, inst):
         filename = Share().mkFile()
-        popUp(f'all words have been imported {filename}')
+        popUp(f'all words have been exported to {filename}')
 
     def loadEvent(self, inst):
 
@@ -62,10 +68,13 @@ class ShareBox(GridLayout):
 
         self.popup.content = box
         self.popup.open()
+        
 
     def on_selectEvent(self, sel, touch):
+        """ The event that is triggered when a file is selecting in the filediolog
+        """
+
         self.popup.dismiss()
-        # self.filelocation.selection = sel
 
         for file in sel:
             # check the name convetion
@@ -78,4 +87,5 @@ class ShareBox(GridLayout):
                 continue
 
             Share().readWordsToDB(file)
-        popUp('all words have been imported')
+
+        print('finished')
