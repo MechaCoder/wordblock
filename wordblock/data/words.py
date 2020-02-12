@@ -63,7 +63,7 @@ class Word(DatabaseBase):
                 except BaseException:
                     pass
 
-    def insert(self, word: str):
+    def insert(self, word: str,):
         """ insert a new word to the table """
 
         word = word.lower()
@@ -104,7 +104,7 @@ class Word(DatabaseBase):
             convertedList.append(d)
         rowids = tbl.insert_multiple(convertedList)
 
-        tdb.close()
+        tdb.tdb.close()
         return rowids
         
 

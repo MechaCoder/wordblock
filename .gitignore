@@ -7,3 +7,4 @@ ds.test.json
 *.cpython-37.pyc
 *.zip
 devKeys.json
+words-*.words.json
