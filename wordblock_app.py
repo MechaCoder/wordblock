@@ -171,6 +171,12 @@ class SettingsScreen(Screen):
 
         self.add_widget(self.box)
 
+    def on_enter(self):
+        super().on_enter()
+        self.box.remove_widget(self.sBox)
+        self.sBox = SearchLayoutEdit()
+        self.box.add_widget(self.sBox)
+
 
 class PrefencesScreen(Screen):
 
