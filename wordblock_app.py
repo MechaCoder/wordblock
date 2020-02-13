@@ -51,7 +51,6 @@ class PannelToolBar(GridLayout):
         )
 
         self.cols = 3
-        # self.size_hint_y = 0.5
 
         self.add_widget(self.btn_wordblock)
         self.add_widget(self.btn_setting)
