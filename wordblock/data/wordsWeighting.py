@@ -36,3 +36,13 @@ class WordWeighting(DatabaseBase):
         tdb.tdb.close()
 
         return existing
+
+    def increment(self, word_id:int):
+
+        tdb = DatabaseObject(self.file, self.table)
+        value = 0
+        if self.wightingExists(word_id):
+            value = self.get(word_id)['value_id']
+        value += 1
+        return self.set(word_id, value)
+

@@ -2,6 +2,7 @@ from .base import DatabaseBase, TinyDB, Query, time_ns, ascii_letters, DatabaseO
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from fuzzywuzzy import process
+from .wordsWeighting import WordWeighting
 
 
 def getWordsFromUrl(url: str, wordSize: int = 5):
@@ -86,6 +87,7 @@ class Word(DatabaseBase):
 
         tdb = DatabaseObject(self.file, self.table)
         tbl = tdb.tbl
+        wordW = WordWeighting()
 
         convertedList = []
         for word in wordsList:
@@ -95,7 +97,8 @@ class Word(DatabaseBase):
                 continue
 
             if tbl.contains(Query().word == word.lower()):
-                continue
+                wordRow = self.getRowByWord(word.lower())
+                WordWeighting().increment(wordRow['id'])
 
             d = {
                 'word': word.lower(),
