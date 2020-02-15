@@ -18,6 +18,9 @@ class Prefences(DatabaseBase):
         if self.settingExists('makeCaps') is False:
             self.set('makeCaps', False)
 
+        if self.settingExists('ai') is False:
+            self.set('ai', False)
+
     def set(self, tag: str, value):
 
         tdb = DatabaseObject(self.file, self.table)

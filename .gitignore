@@ -8,3 +8,4 @@ ds.test.json
 *.zip
 devKeys.json
 words-*.words.json
+aiData.json

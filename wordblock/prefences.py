@@ -25,8 +25,17 @@ class PrefencesGui(GridLayout):
 
         chMakeCaps = Switch(active=self.getSettingValue('makeCaps'))
         chMakeCaps.bind(active=self.callbackMakeCaps)
+
         self.add_widget(Label(text='app will show all words in Caps'))
         self.add_widget(chMakeCaps)
+
+        self.add_widget(
+            Label(text='Imperment AI')
+        )
+
+        chAI = Switch(active=self.getSettingValue('ai'))
+        chAI.bind(active=self.callbackAi)
+        self.add_widget(chAI)
 
         self.add_widget(
             Label(text="URL importing")
@@ -45,6 +54,9 @@ class PrefencesGui(GridLayout):
 
     def callbackMakeCaps(self, inst, value):
         self.pref.set('makeCaps', value)
+
+    def callbackAi(self, inst, value):
+        self.pref.set('ai', value)
 
     def getSettingValue(self, settingName: str):
         return self.pref.get(settingName)['val']

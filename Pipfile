@@ -20,6 +20,7 @@ coverage = "*"
 gitpython = "*"
 requests = "*"
 ujson = "*"
+mindsdb = "*"
 
 [requires]
 python_version = "3.7"
