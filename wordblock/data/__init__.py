@@ -3,6 +3,8 @@ from .prefences import Prefences  # noqa: F401
 from .wordUseage import WordUseage  # noqa: F401
 from .wordsWeighting import WordWeighting #noqa: F401
 
+from wordblock.ai import AIbase
+
 
 def getCountPannel(findStr: str):
 
@@ -29,6 +31,12 @@ def getCountPannel(findStr: str):
     counts = []
     nonCounts = []
     for wordRow in allwordsrows:
+        if Prefences().get('ai'):
+            aiUid = AIbase().predict()
+            if wordRow['id'] == aiUid:
+                counts.insert(0, wordRow)
+                continue
+
         if int(wordRow['count']) is 0:
             nonCounts.append(wordRow)
             continue
