@@ -1,3 +1,5 @@
+from multiprocessing import Process
+
 from kivy.config import Config
 from kivy.app import App
 from kivy.uix.button import Button
@@ -17,7 +19,7 @@ from wordblock.speaker import speak
 from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayoutEdit
 from wordblock.prefences import PrefencesGui
 from wordblock.share import ShareBox
-from wordblock.ai import AIbase
+from wordblock.ai import processAiData, setPrediction
 from clipPad import Clipper
 
 
@@ -227,12 +229,12 @@ class MainApp(App):
 
 if __name__ == '__main__':
 
-    ai = AIbase()
-    # trainingFile = ai.processData() # this seams to crash the app whould a subprocess be better
-    predictedId = ai.predict() ## sets a prodiction value to settings
-    Prefences().set('ai-id', predictedId)
+    t = Process(target=processAiData) #  process the ai data
+    t.start()
+    t2 = Process(target=setPrediction) # set the prodiction
+    t2.start()
 
     fuctWidth = Window.size[0] + (Window.size[0] / 2)
     Window.size = (fuctWidth, 300)
     Config.set('input', 'mouse', 'mouse,disable_multitouch')
-    MainApp().run()
+    x = MainApp().run()
