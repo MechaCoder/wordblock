@@ -17,6 +17,8 @@ def getCountPannel(findStr: str):
     wordsCount = []
     wordsCountWithoutCount = []
 
+    aiUid = Prefences().get('ai-id')['val']
+
     allwordsrows = []
     for word in allWords:
         row = wordObj.getRowByWord(word)
@@ -32,8 +34,7 @@ def getCountPannel(findStr: str):
     nonCounts = []
     for wordRow in allwordsrows:
         if Prefences().get('ai'):
-            aiUid = AIbase().predict()
-            if wordRow['id'] == aiUid:
+            if wordRow['id'] is aiUid:
                 counts.insert(0, wordRow)
                 continue
 

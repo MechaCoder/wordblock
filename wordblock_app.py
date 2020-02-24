@@ -17,6 +17,7 @@ from wordblock.speaker import speak
 from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayoutEdit
 from wordblock.prefences import PrefencesGui
 from wordblock.share import ShareBox
+from wordblock.ai import AIbase
 from clipPad import Clipper
 
 
@@ -80,7 +81,6 @@ class WordGrid(GridLayout):
         self.cols = 8
         self.block = {}
 
-        # wordsList = Word().readFindString(self.serchTerm):
         for wordRow in getCountPannel(self.serchTerm):
             word = wordRow['word']
 
@@ -226,6 +226,12 @@ class MainApp(App):
 
 
 if __name__ == '__main__':
+
+    ai = AIbase()
+    # trainingFile = ai.processData() # this seams to crash the app whould a subprocess be better
+    predictedId = ai.predict() ## sets a prodiction value to settings
+    Prefences().set('ai-id', predictedId)
+
     fuctWidth = Window.size[0] + (Window.size[0] / 2)
     Window.size = (fuctWidth, 300)
     Config.set('input', 'mouse', 'mouse,disable_multitouch')
