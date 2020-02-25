@@ -21,22 +21,29 @@ def getCountPannel(findStr: str):
 
     allwordsrows = []
     for word in allWords:
-        row = wordObj.getRowByWord(word)
-        row['count'] = 0
-        if row['id'] in wordCounts.keys():
-            row['count'] = wordCounts[row['id']]
 
-        if weighting.wightingExists(row['id']):
+        row = wordObj.getRowByWord(word) # gets the word row
+
+        row['count'] = 0
+        
+        if row['id'] in wordCounts.keys(): # sets the useage
+            row['count'] = wordCounts[row['id']] 
+
+        if weighting.wightingExists(row['id']): #  sets the weighting
             row['count'] = row['count'] + int(weighting.get(row['id'])['value_id'])
+        
         allwordsrows.append(row)
 
     counts = []
     nonCounts = []
+    aiValue = None
+    
     for wordRow in allwordsrows:
         if Prefences().get('ai'):
-            if wordRow['id'] is aiUid:
-                counts.insert(0, wordRow)
+            if wordRow['id'] == aiUid:
+                aiValue = wordRow
                 continue
+
 
         if int(wordRow['count']) is 0:
             nonCounts.append(wordRow)
@@ -46,7 +53,10 @@ def getCountPannel(findStr: str):
     counts_reverse = sorted(counts, key=lambda i: i['count'])
     counts_reverse.reverse()
     nonCounts = sorted(nonCounts, key=lambda i: i['word'])
-    return counts_reverse + nonCounts
+    returnlist = counts_reverse + nonCounts
+    if isinstance(aiValue, dict):
+        returnlist.insert(0, aiValue)
+    return returnlist
 
 
 
