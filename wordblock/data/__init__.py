@@ -52,10 +52,13 @@ def getCountPannel(findStr: str):
         
     counts_reverse = sorted(counts, key=lambda i: i['count'])
     counts_reverse.reverse()
+    
     nonCounts = sorted(nonCounts, key=lambda i: i['word'])
     returnlist = counts_reverse + nonCounts
+    
     if isinstance(aiValue, dict):
         returnlist.insert(0, aiValue)
+    
     return returnlist
 
 
