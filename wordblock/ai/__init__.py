@@ -5,6 +5,7 @@ from .base import AIbase
 def processAiData():
     obj = AIbase()
     obj.processData()
+    obj.train()
     return True
 
 def setPrediction():

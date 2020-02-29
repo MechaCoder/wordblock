@@ -3,7 +3,7 @@ from .prefences import Prefences  # noqa: F401
 from .wordUseage import WordUseage  # noqa: F401
 from .wordsWeighting import WordWeighting #noqa: F401
 
-from wordblock.ai import AIbase
+from wordblock.ai.base import AIbase
 
 
 def getCountPannel(findStr: str):
