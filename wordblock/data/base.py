@@ -18,6 +18,8 @@ class DatabaseObject:
 class DatabaseException(Exception):
     pass
 
+class DatabaseBaseWarning(Warning):
+    pass
 
 class DatabaseBase:
 
@@ -35,6 +37,8 @@ class DatabaseBase:
             raise DatabaseException(
                 'No row has been found'
             )
+
+            return None
 
         if isinstance(doc, Document) is False:
             raise DatabaseException(

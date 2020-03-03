@@ -64,6 +64,19 @@ class Word(DatabaseBase):
                 except BaseException:
                     pass
 
+    def incrementWordWegight(self, word):
+        """ will attempt to find a word and add 1 to the weighting"""
+
+        try:
+            wordW = WordWeighting()
+            wordRow = self.getRowByWord(wordW)
+            wordW.increment(wordRow['id'])
+            return True
+        except BaseException:
+            return False
+
+
+
     def insert(self, word: str,):
         """ insert a new word to the table """
 
@@ -73,7 +86,8 @@ class Word(DatabaseBase):
         tbl = tdb.tbl
 
         if tbl.contains(Query().word == word.lower()):
-            raise Warning(f'{word} already exists')
+            self.incrementWordWegight(word.lower())
+
 
         rowId = tbl.insert({
             'word': word.lower(),
@@ -97,8 +111,7 @@ class Word(DatabaseBase):
                 continue
 
             if tbl.contains(Query().word == word.lower()):
-                wordRow = self.getRowByWord(word.lower())
-                WordWeighting().increment(wordRow['id'])
+                self.incrementWordWegight(word.lower())
 
             d = {
                 'word': word.lower(),

@@ -2,6 +2,7 @@ from .words import Word  # noqa: F401
 from .prefences import Prefences  # noqa: F401
 from .wordUseage import WordUseage  # noqa: F401
 from .wordsWeighting import WordWeighting #noqa: F401
+from .base import DatabaseException
 
 from wordblock.ai.base import AIbase
 
@@ -17,7 +18,10 @@ def getCountPannel(findStr: str):
     wordsCount = []
     wordsCountWithoutCount = []
 
-    aiUid = Prefences().get('ai-id')['val']
+    try:
+        aiUid = Prefences().get('ai-id')['val']
+    except DatabaseException:
+        aiUid = 0
 
     allwordsrows = []
     for word in allWords:

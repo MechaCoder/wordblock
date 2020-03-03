@@ -229,10 +229,12 @@ class MainApp(App):
 
 if __name__ == '__main__':
 
-    t = Process(target=processAiData) #  process the ai data
-    t.start()
-    t2 = Process(target=setPrediction) # set the prodiction
-    t2.start()
+    if Prefences().get('ai')['val']:
+        t = Process(target=processAiData) #  process the ai data
+        t.start()
+        t2 = Process(target=setPrediction) # set the prodiction
+        t2.start()
+    
 
     fuctWidth = Window.size[0] + (Window.size[0] / 2)
     Window.size = (fuctWidth, 300)
