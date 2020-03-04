@@ -2,6 +2,32 @@ from git import Repo
 from shutil import make_archive, copyfile
 from requests import post
 from json import loads
+import os
+import sys
+import requests
+
+
+class upload_in_chunks(object):
+    def __init__(self, filename, chunksize=1 << 13):
+        self.filename = filename
+        self.chunksize = chunksize
+        self.totalsize = os.path.getsize(filename)
+        self.readsofar = 0
+
+    def __iter__(self):
+        with open(self.filename, 'rb') as file:
+            while True:
+                data = file.read(self.chunksize)
+                if not data:
+                    sys.stderr.write("\n")
+                    break
+                self.readsofar += len(data)
+                percent = self.readsofar * 1e2 / self.totalsize
+                sys.stderr.write("\r{percent:3.0f}%".format(percent=percent))
+                yield data
+
+    def __len__(self):
+        return self.totalsize
 
 
 class Deploy:
@@ -49,13 +75,16 @@ class Deploy:
         BB_AUTH_STRING = json['BB_AUTH_STRING']
         BITBUCKET_REPO_OWNER = json['BITBUCKET_REPO_OWNER']
         BITBUCKET_REPO_SLUG = json['BITBUCKET_REPO_SLUG']
-
-        fileObj = {'files': open(f'{filePath}', 'rb')}
         url = f'https://{BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/{BITBUCKET_REPO_OWNER}/{BITBUCKET_REPO_SLUG}/downloads'
-        req = post(url, files=fileObj)
-        fileObj['files'].close()
+        
 
-        return req.status_code
+
+        # with open(filePath, 'rb') as fileObj:
+        #     req = post(url, data=fileObj)
+
+        req = post(url, data = upload_in_chunks(filePath, 10))
+
+        return True
 
     def main(self):
         self.cpReadmeToBuild()
