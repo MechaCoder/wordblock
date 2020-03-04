@@ -1,10 +1,10 @@
-from git import Repo
-from shutil import make_archive, copyfile
-from requests import post
 from json import loads
 import os
 import sys
-import requests
+
+from git import Repo
+from shutil import make_archive, copyfile
+from requests import post
 
 
 class upload_in_chunks(object):
@@ -76,11 +76,6 @@ class Deploy:
         BITBUCKET_REPO_OWNER = json['BITBUCKET_REPO_OWNER']
         BITBUCKET_REPO_SLUG = json['BITBUCKET_REPO_SLUG']
         url = f'https://{BB_AUTH_STRING}@api.bitbucket.org/2.0/repositories/{BITBUCKET_REPO_OWNER}/{BITBUCKET_REPO_SLUG}/downloads'
-        
-
-
-        # with open(filePath, 'rb') as fileObj:
-        #     req = post(url, data=fileObj)
 
         req = post(url, data = upload_in_chunks(filePath, 10))
 
@@ -98,7 +93,7 @@ class Deploy:
 
         }
         print('sending file to bitbucket.')
-        if self.postFileToBitbucket(pathname) is 200:
+        if self.postFileToBitbucket(pathname):
             rObj['sentToBb'] = True
 
         return rObj
