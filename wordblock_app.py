@@ -20,6 +20,7 @@ from wordblock.settings import WordsListLayout, UrlLayout, AddSingle, SearchLayo
 from wordblock.prefences import PrefencesGui
 from wordblock.share import ShareBox
 from wordblock.ai import processAiData, setPrediction
+from wordblock.searchBox import SearchBox
 from clipPad import Clipper
 
 
@@ -117,16 +118,13 @@ class WordBlockScreen(Screen):
         self.importBox.height = 30
         self.box.add_widget(self.importBox)
 
-        self.searchBox = TextInput(
-            text="",
-            size_hint_y=0.15,
-            multiline=False,
-            on_text_validate=self.findWords
-        )
-        self.searchBox.bind(text=self.onTextChange)
+        self.searchBox = SearchBox()
+        self.searchBox.size_hint_y = None
+        self.searchBox.height = 30
+
         self.box.add_widget(self.searchBox)
 
-        self.word = WordGrid(findTxt=self.searchBox.text)
+        self.word = WordGrid(findTxt=self.searchBox.searchBox.text)
         self.box.add_widget(self.word)
 
         self.findWords()
@@ -134,19 +132,9 @@ class WordBlockScreen(Screen):
 
     def findWords(self):
         self.box.remove_widget(self.word)
-        self.word = WordGrid(findTxt=self.searchBox.text)
+        self.word = WordGrid(findTxt=self.searchBox.searchBox.text)
         self.box.add_widget(self.word)
-
-    def onTextChange(self, instance, value):
-        self.box.remove_widget(self.word)
-        self.word = WordGrid(findTxt=self.searchBox.text)
-        self.box.add_widget(self.word)
-
-    def on_enter(self):
-        super().on_enter()
-        self.box.remove_widget(self.word)
-        self.word = WordGrid(findTxt=self.searchBox.text)
-        self.box.add_widget(self.word)
+        pass
 
 
 class SettingsScreen(Screen):

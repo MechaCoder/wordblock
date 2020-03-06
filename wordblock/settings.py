@@ -17,6 +17,7 @@ from .utils import importer, async_importer
 from .utils import isURLValid
 from .utils import isInt
 from .ui.popUp import popUp
+from .searchBox import SearchBox
 
 import asyncio
 
@@ -224,15 +225,17 @@ class SearchLayoutEdit(GridLayout):
 
         self.cols = 1
         stuffHeight = 30
-        self.textBox = TextInput(text='', size_hint_y=None, height=stuffHeight)
+        # # self.textBox = TextInput(text='', size_hint_y=None, height=stuffHeight)
+        # self.textBox.bind(text=self.changeShearchEvent)
 
-        self.textBox.bind(text=self.changeShearchEvent)
+        self.textBox = SearchBox()
+
         self.add_widget(self.textBox)
 
         self.rowList = WordsListLayout(
             spacing=0,
             size_hint_y=None,
-            qStr=self.textBox.text,
+            qStr=self.textBox.searchBox.text,
         )
 
         self.rowList.bind(
@@ -247,5 +250,5 @@ class SearchLayoutEdit(GridLayout):
         self.add_widget(self.scrollPannel)
 
     def changeShearchEvent(self, inst, value):
-        self.rowList.qString = self.textBox.text
+        self.rowList.qString = self.textBox.searchBox.text
         self.rowList.buildList()
