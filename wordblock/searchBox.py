@@ -10,8 +10,11 @@ class SearchBox(GridLayout):
         self.searchBox = TextInput(
             text="",
             multiline=False,
-            on_text_validate=self.makeSearch
+            on_text_validate=self.makeSearch,
         )
+
+        self.searchBox.size_hint_x = None
+        self.searchBox.width = 800
 
         self.btn = Button(
             text='Search',
